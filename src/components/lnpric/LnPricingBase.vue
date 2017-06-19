@@ -293,7 +293,7 @@ export default {
           break
       }
        this.rateType = [this.rateTypeItem, this.rateTypeSubItem]
-             this.lnBusiness.RateType=rateTypeDict[this.rateTypeItem]
+      this.lnBusiness.RateType=rateTypeDict[this.rateTypeItem]
       this.lnBusiness.RepriceFreq=repriceFreqDict[this.rateTypeSubItem]
     },     
     rpymTypeChange (value, index) {
@@ -318,35 +318,30 @@ export default {
       
       lnBusiness.Cust.CustCode = this.$route.params.custCode
       //lnBusiness.Cust.CustName = this.$store.state.lncust.CustName
-      lnBusiness.RateType=rateTypeDict[this.rateTypeItem]
-      lnBusiness.RepriceFreq=repriceFreqDict[this.rateTypeSubItem]
-      lnBusiness.RpymType=rpymTypeDict[this.rpymTypeItem]
-      lnBusiness.RpymCapitalFreq=rpymCapitalFreqDict[this.rpymTypeSubItem]
-      lnBusiness.Term = parseInt(lnBusiness.Term)
-      lnBusiness.RepriceFreq = parseInt(lnBusiness.RepriceFreq)
-      lnBusiness.RpymCapitalFreq = parseInt(lnBusiness.RpymCapitalFreq)
+      lnBusiness.RateType=parseInt(rateTypeDict[this.rateTypeItem])
+      lnBusiness.RepriceFreq=parseInt(repriceFreqDict[this.rateTypeSubItem])
+      lnBusiness.RpymType=parseInt(rpymTypeDict[this.rpymTypeItem])
+      lnBusiness.RpymCapitalFreq=parseInt(rpymCapitalFreqDict[this.rpymTypeSubItem])
       lnBusiness.Principal = parseInt(lnBusiness.Principal)
+
+
       lnBusiness.Status="-1"
 
       this.validLnBusiness(lnBusiness)
    
       if(this.lnBusinessValid == 3){
         console.log("LnPricingBase.vue----",lnBusiness)
+        this.$store.state.lnBusiness
 
+       this.$store.dispatch('saveLnBusinessInfo',lnBusiness)
 
-      // this.$store.dispatch('saveLnBusinessInfo',lnBusiness)
-      //查询抵押品保证人信息
-        var params = {
-        'StartRowNumber': 0,
-        'CurrentPage': 0,
-        'NextPage': 1,
-        'OrderAttr': 'CUST_NAME',
-        'BusinessCode':this.$route.params.businessCode
-      }
-       this.$store.dispatch('getLnMorts', params)
-       this.$store.dispatch('getLnGuarantes', params)
-       
-      router.push({ name: 'lnpricmort', params: { custCode: this.$route.params.custCode, businessCode: this.$route.params.businessCode } })
+       if ('editlnpricinfo' == this.$route.name){
+              router.push({ name: 'editlnpricmort', params: { custCode: this.$route.params.custCode, businessCode: this.$route.params.businessCode } })
+
+       }else{
+              router.push({ name: 'lnpricmort', params: { custCode: this.$route.params.custCode, businessCode: this.$route.params.businessCode } })
+
+       }
 
       //  if(this.lnBusinessStatus.code == 200){
       //       this.activeStep++

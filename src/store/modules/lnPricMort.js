@@ -14,19 +14,35 @@ const getters = {
 
 // actions
 const actions = {
-    getLnMorts({ rootState, commit }, params) {
+    getLnMorts({ commit }, params) {
         var url = "/lnmort/BusinessCode/" + params.BusinessCode
         api.getPage(url, { params }, (lnmorts, params) => {
-            //commit(types.GET_LN_PRIC_MORTS_SUCCESS, { rootState, lnmorts })
+            commit(types.GET_LN_PRIC_MORTS_SUCCESS, { lnmorts })
             commit(types.SET_LN_BASE_MORTS_SUCCESS, { lnmorts })
 
         }, (data) => {
             commit(types.GET_LN_PRIC_MORTS_FAILED, { data })
         })
     },
-    saveLnMorts({ commit }, params) {
+    saveLnMorts({ dispatch, commit }, params) {
         var url = "/lnmort"
         api.save(url, { params }, (data) => {
+            commit(types.SAVE_LN_PRIC_MORTS_SUCCESS, { data })
+            var params = {
+                'StartRowNumber': 0,
+                'CurrentPage': 0,
+                'NextPage': 1,
+                'OrderAttr': 'CUST_NAME',
+                'BusinessCode': data.BusinessCode
+            }
+            dispatch('getLnMorts', params)
+        }, (data) => {
+            commit(types.SAVE_LN_PRIC_MORTS_FAILED, { data })
+        })
+    },
+    deleteLnMorts({ commit }, params) {
+        var url = "/lnmort"
+        api.delete(url, { params }, (data, params) => {
             commit(types.SAVE_LN_PRIC_MORTS_SUCCESS, { data })
 
         }, (data) => {
@@ -38,9 +54,8 @@ const actions = {
 
 // mutations
 const mutations = {
-    [types.GET_LN_PRIC_MORTS_SUCCESS](state, { rootState, lnmorts }) {
-        rootState.lnBusiness.Morts = lnmorts
-        console.log("设置抵押品", rootState.lnBusiness)
+    [types.GET_LN_PRIC_MORTS_SUCCESS](state, { lnmorts }) {
+        console.log("get types.GET_LN_PRIC_MORTS_SUCCESS")
         state.lnMorts = lnmorts
     },
     [types.GET_LN_PRIC_MORTS_FAILED](state, data) {

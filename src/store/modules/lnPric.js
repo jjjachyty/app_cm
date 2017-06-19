@@ -7,7 +7,6 @@ const state = {
     lnPrics: [],
     lnPric: {},
     lnBusinessCode: "",
-    message: { code: null, msg: null },
     activeSteps: 0
 }
 
@@ -149,48 +148,48 @@ const mutations = {
         state.lnPrics = ""
     },
     [types.DELETE_LN_PRIC_SUCCESS](state, data) {
-        state.message.code = 200
-        state.message.msg = "删除定价单成功"
+        // state.message.code = 200
+        // state.message.msg = "删除定价单成功"
     },
     [types.DELETE_LN_PRIC_FAILED](state, data) {
-        state.message.code = 400
-        state.message.msg = "删除定价单失败"
+        // state.message.code = 400
+        // state.message.msg = "删除定价单失败"
     },
     [types.SAVE_LN_PRICING_INFO_SUCCESS](state, data) {
-        state.message.code = 200
+        //state.message.code = 200
         state.activeSteps++
-            state.message.msg = "保存定价单基本信息成功"
-        console.log("types.SAVE_LN_PRICING_INFO_SUCCESS", state)
+            //state.message.msg = "保存定价单基本信息成功"
+            console.log("types.SAVE_LN_PRICING_INFO_SUCCESS", state)
     },
     [types.SAVE_LN_PRICING_INFO_FAILED](state, data) {
-        state.message.code = 400
-        state.message.msg = "保存定价单基本信息失败"
+        //state.message.code = 400
+        //state.message.msg = "保存定价单基本信息失败"
     },
     [types.LN_BASE_PRICING_SUCCESS](state, data) {
         state.lnPric = data
-        state.message.code = 200
-        state.message.msg = "贷款基础定价成功"
+            // state.message.code = 200
+            // state.message.msg = "贷款基础定价成功"
     },
     [types.LN_BASE_PRICING_FAILED](state, data) {
-        state.message.code = 400
-        state.message.msg = "贷款基础定价失败"
+        // state.message.code = 400
+        // state.message.msg = "贷款基础定价失败"
     },
     [types.LN_INVERSE_PRICING_SUCCESS](state, data) {
         state.lnPric = data
-        state.message.code = 200
-        state.message.msg = "贷款反算成功"
+            // state.message.code = 200
+            // state.message.msg = "贷款反算成功"
     },
     [types.LN_INVERSE_PRICING_FAILED](state, data) {
-        state.message.code = 400
-        state.message.msg = "贷款反算失败"
+        // state.message.code = 400
+        // state.message.msg = "贷款反算失败"
     },
     [types.SAVE_LN_PRICING_SUCCESS](state, data) {
-        state.message.code = 200
-        state.message.msg = "贷款定价单保存成功"
+        // state.message.code = 200
+        // state.message.msg = "贷款定价单保存成功"
     },
     [types.SAVE_LN_PRICING_FAILED](state, data) {
-        state.message.code = 400
-        state.message.msg = "贷款定价单保存失败"
+        // state.message.code = 400
+        // state.message.msg = "贷款定价单保存失败"
     }
 }
 

@@ -263,7 +263,7 @@ export default {
         BaseRateType: "1",
         MainMortgageType: "4"
     }
-        router.push({name:'lnpricinfo',params:{custCode:this.cust.CustCode}})
+        router.push({name:'lnpricinfo',params:{custCode:this.cust.CustCode,businessCode:''}})
     }
     
   },created(){

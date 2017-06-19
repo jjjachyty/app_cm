@@ -7,25 +7,25 @@
   
     <mu-list>
       <span class="title">存款派生</span>
-       <mu-flat-button label="添加"  icon="control_point" @click="toggle('dp')" primary/>
-        <div>
-          <!--<div v-if="1">
-          <mu-list-item v-for="mort in lnBusiness.Morts">
-            <mu-sub-header>
-              <span>{{mort.MortgageName}}</span>
-              <span>{{mort.MortgageValue / 10000 }} 万</span>
-              <span>{{mort.Currency | dict('currency') }}</span>
-              </mu-sub-header>
-    
-    
-            <mu-icon-menu slot="right" icon="more_vert" tooltip="操作">
-              <mu-menu-item title="编辑" @click="editMort(item)" />
-              <mu-menu-item title="删除" @click="deleteMort(item)" />
-            </mu-icon-menu>
-          </mu-list-item>
-        <mu-divider />
-        </div>-->
-        </div>
+      <mu-flat-button label="添加" icon="control_point" @click="toggle('dp')" primary/>
+      <div>
+        <!--<div v-if="1">
+            <mu-list-item v-for="mort in lnBusiness.Morts">
+              <mu-sub-header>
+                <span>{{mort.MortgageName}}</span>
+                <span>{{mort.MortgageValue / 10000 }} 万</span>
+                <span>{{mort.Currency | dict('currency') }}</span>
+                </mu-sub-header>
+      
+      
+              <mu-icon-menu slot="right" icon="more_vert" tooltip="操作">
+                <mu-menu-item title="编辑" @click="editMort(item)" />
+                <mu-menu-item title="删除" @click="deleteMort(item)" />
+              </mu-icon-menu>
+            </mu-list-item>
+          <mu-divider />
+          </div>-->
+      </div>
       </mu-list-item>
   
     </mu-list>
@@ -33,26 +33,26 @@
     <mu-divider />
   
     <mu-list>
-           <span class="title">中间业务派生</span>
-       <mu-flat-button label="添加"  icon="control_point" primary/>
-        <div>
-          <!--<div v-if="1">
-          <mu-list-item v-for="mort in lnBusiness.Morts">
-            <mu-sub-header>
-              <span>{{mort.MortgageName}}</span>
-              <span>{{mort.MortgageValue / 10000 }} 万</span>
-              <span>{{mort.Currency | dict('currency') }}</span>
-              </mu-sub-header>
-    
-    
-            <mu-icon-menu slot="right" icon="more_vert" tooltip="操作">
-              <mu-menu-item title="编辑" @click="editMort(item)" />
-              <mu-menu-item title="删除" @click="deleteMort(item)" />
-            </mu-icon-menu>
-          </mu-list-item>
-        <mu-divider />
-        </div>-->
-        </div>
+      <span class="title">中间业务派生</span>
+      <mu-flat-button label="添加" icon="control_point" primary/>
+      <div>
+        <!--<div v-if="1">
+            <mu-list-item v-for="mort in lnBusiness.Morts">
+              <mu-sub-header>
+                <span>{{mort.MortgageName}}</span>
+                <span>{{mort.MortgageValue / 10000 }} 万</span>
+                <span>{{mort.Currency | dict('currency') }}</span>
+                </mu-sub-header>
+      
+      
+              <mu-icon-menu slot="right" icon="more_vert" tooltip="操作">
+                <mu-menu-item title="编辑" @click="editMort(item)" />
+                <mu-menu-item title="删除" @click="deleteMort(item)" />
+              </mu-icon-menu>
+            </mu-list-item>
+          <mu-divider />
+          </div>-->
+      </div>
       </mu-list-item>
   
     </mu-list>
@@ -75,11 +75,11 @@
     </mu-list>
     <mu-divider />
     <div class="gutter">
-          <mu-raised-button label="计算优惠" class="demo-raised-button " @click="calculScene" primary fullWidth/>
+      <mu-raised-button label="计算优惠" class="demo-raised-button " @click="calculScene" primary fullWidth/>
     </div>
-
-
-        <!--抵押存款出框 -->
+  
+  
+    <!--抵押存款出框 -->
     <div>
       <mu-drawer :open="dpOpen" :docked="false" @close="sceneDpProduct('close')">
         <mu-appbar title="存款" />
@@ -127,15 +127,15 @@
   
       </mu-drawer>
     </div>
-
-
-
+  
+  
+  
   </div>
   
-
-
-
-
+  
+  
+  
+  
   </div>
 </template>
 
@@ -153,14 +153,12 @@
     data() {
       return {
         principal: 0,
-        dpOpen:false,
-        sceneDp:{}
+        dpOpen: false,
+        sceneDp: {}
       }
     },
   
-    computed: { ...mapGetters({
-  
-      })
+    computed: { 
     },
     methods: {
       goBack() {
@@ -176,10 +174,11 @@
             break
         }
       },
-      dpToggle(type){
-           this.dpOpen = !this.dpOpen
-      },      ibToggle(type){
-
+      dpToggle(type) {
+        this.dpOpen = !this.dpOpen
+      },
+      ibToggle(type) {
+  
       },
       openPop() {
         this.$store.dispatch('getTree', {
@@ -205,8 +204,8 @@
       handleNext() {
   
       },
-      calculScene(){
-                router.push({
+      calculScene() {
+        router.push({
           name: 'lnpricrst',
           params: {
             custCode: this.$route.params.custCode,
@@ -229,17 +228,19 @@
   }
 </script>
 
-<style >
-.gutter{
-       padding-left: 16px;
-      padding-right: 16px;
-}
-.title{
-   padding-left: 16px;
-   font-size: 18px;
-}
+<style>
+  .gutter {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  
+  .title {
+    padding-left: 16px;
+    font-size: 18px;
+  }
+  
   .echarts {
-height: 50vh;
-margin-left: -16px;
-}
+    height: 50vh;
+    margin-left: -16px;
+  }
 </style>

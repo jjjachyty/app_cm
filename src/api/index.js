@@ -79,7 +79,10 @@ export default {
             }).then((response) => {
             if ("200" == response.data.RstCode) {
                 console.log("delete - 200 - cb")
-                cb(response.data, params)
+
+                setTimeout(() => {
+                    cb(response.data, params)
+                }, 16)
             } else {
                 console.log("delete - not200 - errorcb")
                 errorcb(response.data)
@@ -99,9 +102,9 @@ export default {
             console.log("save", response.data.RstCode)
             if (200 == response.data.RstCode) {
                 console.log("200 cb")
-                setTimeout(() => {
-                    cb(response.data.PageData.Rows)
-                }, 16)
+                    //setTimeout(() => {
+                cb(response.data.PageData.Rows)
+                    //}, 16)
             } else {
                 console.log("400 errorcb")
                 errorcb(response.data)

@@ -98,6 +98,7 @@ export default {
    
          
     },lnpricing(item){
+     console.log('LnBusiness',item)
       this.$store.dispatch('setLnBusiness',item)
        
       router.push({name:"editlnpricinfo",params:{businessCode:item.BusinessCode,custCode:item.Cust.CustCode}})

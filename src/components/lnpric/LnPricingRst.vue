@@ -21,7 +21,7 @@
               目标利率
             </mu-flexbox-item>
             <mu-flexbox-item>
-             {{lnPric.TgtRate * 100 | bankRound(2)}} %
+              {{lnPric.TgtRate * 100 | bankRound(2)}} %
             </mu-flexbox-item>
   
           </mu-flexbox>
@@ -68,13 +68,12 @@
           </mu-flexbox-item>
           <mu-flexbox-item>
             <mu-text-field hintText="执行利率" type="number" v-model="intRateInput" fullWidth />
-            
+  
           </mu-flexbox-item>
           <mu-flexbox-item>
-            <mu-icon value="show_chart" color="blue"/>
-            {{intRateFloat | bankRound(2)}} %
+            <mu-icon value="show_chart" color="blue" /> {{intRateFloat | bankRound(2)}} %
           </mu-flexbox-item>
-          
+  
         </mu-flexbox>
   
   
@@ -86,63 +85,62 @@
             <mu-text-field hintText="上浮比例" type="number" v-model="intRateFloatInput" fullWidth />
           </mu-flexbox-item>
           <mu-flexbox-item>
-            <mu-icon value="explore" color="blue"/>
-            {{intRate | bankRound(2)}} %
+            <mu-icon value="explore" color="blue" /> {{intRate | bankRound(2)}} %
           </mu-flexbox-item>
         </mu-flexbox>
-          <div class="gutter" v-show="lnPric.IntRate != 0">
+        <div class="gutter" v-show="lnPric.IntRate != 0">
           <mu-raised-button label="反算" class="demo-raised-button " @click="calcul" primary fullWidth/>
         </div>
         <div v-show="clickedCalcul">
-        <mu-list-item title="反算结果" toggleNested >
-          <mu-list-item slot="nested" disabled>
+          <mu-list-item title="反算结果" toggleNested>
+            <mu-list-item slot="nested" disabled>
   
-            <mu-flexbox>
-              <mu-flexbox-item>
-                净利润
-              </mu-flexbox-item>
-              <mu-flexbox-item>
-                {{lnPric.OneLnNetProfit | bankRound(2)}} 元
-              </mu-flexbox-item>
-            </mu-flexbox>
+              <mu-flexbox>
+                <mu-flexbox-item>
+                  净利润
+                </mu-flexbox-item>
+                <mu-flexbox-item>
+                  {{lnPric.OneLnNetProfit | bankRound(2)}} 元
+                </mu-flexbox-item>
+              </mu-flexbox>
   
-            <mu-flexbox>
-              <mu-flexbox-item>
-                EVA
-              </mu-flexbox-item>
-              <mu-flexbox-item>
-                {{lnPric.OneLnYearEva | bankRound(2)}} 元
-              </mu-flexbox-item>
-            </mu-flexbox>
+              <mu-flexbox>
+                <mu-flexbox-item>
+                  EVA
+                </mu-flexbox-item>
+                <mu-flexbox-item>
+                  {{lnPric.OneLnYearEva | bankRound(2)}} 元
+                </mu-flexbox-item>
+              </mu-flexbox>
   
-            <mu-flexbox>
-              <mu-flexbox-item>
-                RAROC
-              </mu-flexbox-item>
-              <mu-flexbox-item>
-                {{lnPric.OneLnRaroc * 100 | bankRound(2)}}%
-              </mu-flexbox-item>
-            </mu-flexbox>
+              <mu-flexbox>
+                <mu-flexbox-item>
+                  RAROC
+                </mu-flexbox-item>
+                <mu-flexbox-item>
+                  {{lnPric.OneLnRaroc * 100 | bankRound(2)}}%
+                </mu-flexbox-item>
+              </mu-flexbox>
+            </mu-list-item>
           </mu-list-item>
-        </mu-list-item>
   
-        <mu-list-item title="备注" toggleNested :open="false">
-          <mu-list-item slot="nested" disabled>
-            <div>
-              <mu-text-field hintText="备注" multiLine :rows="3" v-model="lnPric.Remark" :rowsMax="6" icon="comment" /><br/>
-            </div>
+          <mu-list-item title="备注" toggleNested :open="false">
+            <mu-list-item slot="nested" disabled>
+              <div>
+                <mu-text-field hintText="备注" multiLine :rows="3" v-model="lnPric.Remark" :rowsMax="6" icon="comment" /><br/>
+              </div>
+            </mu-list-item>
           </mu-list-item>
-        </mu-list-item>
-        <div class="gutter" >
-          <mu-raised-button label="保存" class="demo-raised-button " @click="save" primary fullWidth/>
-        </div>
+          <div class="gutter">
+            <mu-raised-button label="保存" class="demo-raised-button " @click="save" primary fullWidth/>
+          </div>
         </div>
       </mu-list-item>
-      
+  
     </mu-list-item>
   
-    <mu-toast v-if="toast" :message="message" @close="hideToast"/>
-
+    <mu-toast v-if="toast" :message="message" @close="hideToast" />
+  
   
   </div>
   </div>
@@ -161,12 +159,12 @@
     },
     data() {
       return {
-        intRateInput:null,
-        lnPricIntRate:null,
-        intRateFloatInput:null,
-        clickedCalcul:false,
-        toast:false,
-        message:"",
+        intRateInput: null,
+        lnPricIntRate: null,
+        intRateFloatInput: null,
+        clickedCalcul: false,
+        toast: false,
+        message: "",
         // lnPric:{
         //   BaseRate:0.0435,
         //   BottomRate:0.078,
@@ -289,30 +287,30 @@
     },
     computed: {
       ...mapGetters({
-      lnPric: 'checkOutLnPrics'
-    }),
-      intRateFloat:function(value){
-        if(null == this.intRateInput){
+        lnPric: 'checkOutLnPrics'
+      }),
+      intRateFloat: function(value) {
+        if (null == this.intRateInput) {
           return 0
         }
-        this.lnPricIntRate = this.intRateInput/100
+        this.lnPricIntRate = this.intRateInput / 100
         this.intRateFloatInput = null
-       return (this.intRateInput/100 - this.lnPric.BaseRate)/this.lnPric.BaseRate*100
+        return (this.intRateInput / 100 - this.lnPric.BaseRate) / this.lnPric.BaseRate * 100
       },
-      intRate:function(value){
-         if(null == this.intRateFloatInput){
+      intRate: function(value) {
+        if (null == this.intRateFloatInput) {
           return 0
         }
         this.intRateInput = null
-        this.lnPricIntRate = (this.intRateFloatInput/100 +1)*this.lnPric.BaseRate
-       return (this.intRateFloatInput/100 +1)*this.lnPric.BaseRate*100
+        this.lnPricIntRate = (this.intRateFloatInput / 100 + 1) * this.lnPric.BaseRate
+        return (this.intRateFloatInput / 100 + 1) * this.lnPric.BaseRate * 100
       },
-      
+  
       //  initRateFloat:function(value){
       //   console.log("initRate",value)
       //  return (this.initRate - this.lnPric.BaseRate)/this.lnPric.BaseRate
       // }
-
+  
     },
     methods: {
       goBack() {
@@ -328,25 +326,30 @@
           }
         })
       },
-      calcul(){
-        if (this.lnPricIntRate > 0 ){
-        var params = {BusinessCode:this.$route.params.businessCode,IntRate:this.lnPricIntRate}
-        this.$store.dispatch("lnInversePricing",params)
-        this.clickedCalcul = true
-      }else{
-        this.toast = true
-        this.message = "请输入正数的执行利率"
-        
-        if (this.toastTimer) clearTimeout(this.toastTimer)
-      this.toastTimer = setTimeout(() => { this.toast = false }, 2000)
-
+      calcul() {
+        if (this.lnPricIntRate > 0) {
+          var params = {
+            BusinessCode: this.$route.params.businessCode,
+            IntRate: this.lnPricIntRate
+          }
+          this.$store.dispatch("lnInversePricing", params)
+          this.clickedCalcul = true
+        } else {
+          this.toast = true
+          this.message = "请输入正数的执行利率"
+  
+          if (this.toastTimer) clearTimeout(this.toastTimer)
+          this.toastTimer = setTimeout(() => {
+            this.toast = false
+          }, 2000)
+  
         }
       },
       save() {
-       this.lnPric.Status = "2"  //计算完成并保存
-       this.lnPric.SceneRate = null
-
-        this.$store.dispatch("saveLnPric",this.lnPric)
+        this.lnPric.Status = "2" //计算完成并保存
+        this.lnPric.SceneRate = null
+  
+        this.$store.dispatch("saveLnPric", this.lnPric)
         router.push({
           name: 'list'
         })
@@ -372,17 +375,18 @@
   
       }
     },
-      created() {
-        console.log("第", this.$store.state.lnPricingSetp, "步")
-        this.$store.state.lnPricingSetp = 2
-              this.$store.dispatch('getLnPrics', {
+    created() {
+      console.log("第", this.$store.state.lnPricingSetp, "步")
+      this.$store.state.lnPricingSetp = 2
+      this.$store.dispatch('getLnPrics', {
         'BusinessCode': this.$route.params.businessCode
       })
-      },watch:{
-        'lnPric': function (val) {
-                  this.bar.baseOption.series[0].data = [(val.FtpRate *100).round(2),(val.OcRate *100).round(2),val.PdRate *100,(val.LgdRate *100).round(2),val.EcRate *100,val.CapCostRate *100,val.CapPftRate *100,val.AddTax *100,val.IncomeTax *100]//val.FtpRate *100
-        }
+    },
+    watch: {
+      'lnPric': function(val) {
+        this.bar.baseOption.series[0].data = [(val.FtpRate * 100).round(2), (val.OcRate * 100).round(2), val.PdRate * 100, (val.LgdRate * 100).round(2), val.EcRate * 100, val.CapCostRate * 100, val.CapPftRate * 100, val.AddTax * 100, val.IncomeTax * 100] //val.FtpRate *100
       }
+    }
   }
 </script>
 

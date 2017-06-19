@@ -27,8 +27,8 @@ export const state = {
         Principal: "",
         BaseRateType: "1",
         MainMortgageType: "4",
-        Morts: [],
-        Guarantes: []
+        //Morts: [],
+        //Guarantes: []
     },
     lnPricingSetp: 0,
     auth: null,
@@ -57,7 +57,18 @@ export const mutations = {
     [types.SET_LN_BASE_MORTS_SUCCESS](state, data) {
         console.log("Morts ------ 设置")
         console.log("查询抵押品并设置值", data.lnmorts)
+
+        state.mesesge.code = "200"
+        state.mesesge.msg = "设置抵押品信息成功"
         state.lnBusiness.Morts = data.lnmorts
+    },
+    [types.SET_LN_BASE_GUARANTES_SUCCESS](state, data) {
+        console.log("Morts ------ 设置")
+        console.log("查询担保人并设置值", data.lnGuarantes)
+        state.mesesge.msg = "设置担保人信息成功"
+        state.mesesge.code = "200"
+        state.lnBusiness.Guarantes = data.lnGuarantes
+
     }
 
 }
