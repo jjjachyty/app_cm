@@ -14,21 +14,21 @@
     <div>
       <mu-sub-header>抵押品</mu-sub-header>
       <!--<div v-if="lnBusiness.Morts">
-          <mu-list-item v-for="mort in lnBusiness.Morts">
-            <mu-sub-header>
-              <span>{{mort.MortgageName}}</span>
-              <span>{{mort.MortgageValue / 10000 }} 万</span>
-              <span>{{mort.Currency | dict('currency') }}</span></mu-sub-header>
+            <mu-list-item v-for="mort in lnBusiness.Morts">
+              <mu-sub-header>
+                <span>{{mort.MortgageName}}</span>
+                <span>{{mort.MortgageValue / 10000 }} 万</span>
+                <span>{{mort.Currency | dict('currency') }}</span></mu-sub-header>
+      
+      
+              <mu-icon-menu slot="right" icon="more_vert" tooltip="操作">
+                <mu-menu-item title="编辑" @click="editMort(item)" />
+                <mu-menu-item title="删除" @click="deleteMort(item)" />
+              </mu-icon-menu>
+            </mu-list-item>
+          <mu-divider />
     
-    
-            <mu-icon-menu slot="right" icon="more_vert" tooltip="操作">
-              <mu-menu-item title="编辑" @click="editMort(item)" />
-              <mu-menu-item title="删除" @click="deleteMort(item)" />
-            </mu-icon-menu>
-          </mu-list-item>
-        <mu-divider />
-  
-        </div>-->
+          </div>-->
       <div v-if="lnMorts">
         <mu-list-item v-for="lnMort in lnMorts">
           <mu-sub-header>
@@ -53,20 +53,20 @@
     <div>
   
       <!--<div v-if="lnBusiness.Guarantes">
-          <mu-list-item v-for="guarante in lnBusiness.Guarantes" id="guarante.Guarante.CustName">
-            <mu-sub-header>
-              <span>{{guarante.Guarante.CustName }}</span>
-              <span>{{guarante.GuaranteType | dict('mortgageType')}}</span>
-            </mu-sub-header>
-    
-    
-            <mu-icon-menu slot="right" icon="more_vert" tooltip="操作">
-              <mu-menu-item title="编辑" @click="editGuarante(guarante)" />
-              <mu-menu-item title="删除" @click="deleteGuarante(guarante)" />
-            </mu-icon-menu>
-          </mu-list-item>
-    
-        </div>-->
+            <mu-list-item v-for="guarante in lnBusiness.Guarantes" id="guarante.Guarante.CustName">
+              <mu-sub-header>
+                <span>{{guarante.Guarante.CustName }}</span>
+                <span>{{guarante.GuaranteType | dict('mortgageType')}}</span>
+              </mu-sub-header>
+      
+      
+              <mu-icon-menu slot="right" icon="more_vert" tooltip="操作">
+                <mu-menu-item title="编辑" @click="editGuarante(guarante)" />
+                <mu-menu-item title="删除" @click="deleteGuarante(guarante)" />
+              </mu-icon-menu>
+            </mu-list-item>
+      
+          </div>-->
   
       <div v-if="lnGuarantes">
         <mu-list-item v-for="guarante in lnGuarantes">
@@ -94,6 +94,7 @@
           <mu-col width="30" tablet="30" desktop="30">
             <mu-sub-header><strong>抵押品</strong></mu-sub-header>
           </mu-col>
+          <input type="hidden" v-model="Mort.UUID"/>
           <mu-col width="60" tablet="65" desktop="65">
             <mu-text-field hintText="选择抵押品" :errorText="mortErr" fullWidth disabled :value="Mort.MortgageName" /></mu-col>
           <mu-col width="10" tablet="5" desktop="5">
@@ -226,6 +227,7 @@
     },
     data() {
       return {
+        action:"add",
         mortOpen: false,
         guaranteOpen: false,
         bottomPopup: false,
@@ -286,10 +288,22 @@
     },
     methods: {
       goBack() {
-        if('editlnpricmort' == this.$route.name){
-                        router.push({ name: 'editlnpricinfo', params: { custCode: this.$route.params.custCode, businessCode: this.$route.params.businessCode } })
-        }else{
-                        router.push({ name: 'lnpricinfo', params: { custCode: this.$route.params.custCode, businessCode: this.$route.params.businessCode } }) 
+        if ('editlnpricmort' == this.$route.name) {
+          router.push({
+            name: 'editlnpricinfo',
+            params: {
+              custCode: this.$route.params.custCode,
+              businessCode: this.$route.params.businessCode
+            }
+          })
+        } else {
+          router.push({
+            name: 'lnpricinfo',
+            params: {
+              custCode: this.$route.params.custCode,
+              businessCode: this.$route.params.businessCode
+            }
+          })
         }
       },
       toggle(item) {
@@ -321,20 +335,20 @@
               //guaranteSave.GuaranteType = this.Guarante.GuaranteType
   
               console.log("新增担保人---", guaranteSave)
-             this.$store.dispatch('saveLnGuarante', guaranteSave)
-             //this.$store.dispatch('getLnGuarantes', params)
-          
-                                            console.log("开始调用getLnGuarantes")
-
-
- 
-
-
+              this.$store.dispatch('saveLnGuarante', guaranteSave)
+              //this.$store.dispatch('getLnGuarantes', params)
+  
+              console.log("开始调用getLnGuarantes")
+  
+  
+  
+  
+  
               // if (undefined == this.$store.state.lnBusiness.Guarantes) {
               //   this.$store.state.lnBusiness.Guarantes = new Array()
               // }
               //this.$store.state.lnBusiness.Guarantes.push(guaranteSave)
-
+  
             }
   
         }
@@ -346,11 +360,11 @@
         this.mortOpen = !this.mortOpen
         switch (flag) {
           case 'open':
+            this.action = "add"
             this.Mort = {}
           case 'close':
             console.log("this.Mort.MortgageCode", this.Mort.MortgageCode)
             if (this.Mort.MortgageCode) {
-
   
               var saveMort = {}
               saveMort.BusinessCode = this.$route.params.businessCode
@@ -358,15 +372,15 @@
               saveMort.MortgageName = this.Mort.MortgageName
               saveMort.MortgageValue = parseInt(this.Mort.MortgageValue)
               saveMort.Currency = this.Mort.Currency
-              this.$store.dispatch('saveLnMorts', saveMort)
-            
-        
-
-
-          
-
+              if ("edit" == this.action) {
+                saveMort.UUID=this.Mort.UUID
+                this.$store.dispatch('updateLnMorts', saveMort)
+              } else {
+                this.$store.dispatch('saveLnMorts', saveMort)
+              }
+              
   
-        }
+            }
         }
         console.log(this.mortOpen)
         //this.docked = !flag
@@ -390,7 +404,7 @@
   
         this.$store.dispatch('lnBasePricing', params)
   
-        console.log("下一步")
+        
         router.push({
           name: 'lnpricrst',
           params: {
@@ -465,6 +479,12 @@
         }
         this.$store.dispatch('getLnGuarantes', params)
       },
+      editMort(lnMort) {
+        this.mortOpen = !this.mortOpen
+        this.action = "edit"
+        console.log("editMort----", lnMort)
+        this.Mort = lnMort
+      },
       deleteMort(lnMort) {
   
         // var delLnMort = {
@@ -474,14 +494,14 @@
         //   }
         // }
         this.$store.dispatch('deleteLnMorts', lnMort)
-        var params = {
-          'StartRowNumber': 0,
-          'CurrentPage': 0,
-          'NextPage': 1,
-          'OrderAttr': 'CUST_NAME',
-          'BusinessCode': this.$route.params.businessCode
-        }
-        this.$store.dispatch('getLnMorts', params)
+        // var params = {
+        //   'StartRowNumber': 0,
+        //   'CurrentPage': 0,
+        //   'NextPage': 1,
+        //   'OrderAttr': 'CUST_NAME',
+        //   'BusinessCode': this.$route.params.businessCode
+        // }
+        // this.$store.dispatch('getLnMorts', params)
       }
   
     },

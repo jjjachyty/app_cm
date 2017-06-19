@@ -10,7 +10,7 @@ let repriceFreq = { "0": "无", "30": "一个月", "90": "三个月", "180": "�
 let rpymType = { "1": "一次还款", "2": "等额本息", "3": "等额本金", "4": "不定期不定额" }
 let rpymCapitalFreq = { "-1": "无", "0": "一次还本", "30": "按月还本", "90": "按季还本", "360": "按年还本" }
 let guaranteType = { "1": "企业", "2": "担保公司", "3": "信用" }
-let currency = { "CNY": "人民币", "USD": "美元" }
+let currency = { "CNY": "人民币", "USD": "美元", "HKD": "港币" }
 let sceneDPTerm = { "0": "活期", "90": "三个月", "180": "六个月", "360": "一年", "720": "二年", "1080": "三年", "1800": "五年" }
 let custSize = {
     '1': '大型',
@@ -56,7 +56,7 @@ Vue.filter('dict', function(input, dictType) {
             return sceneDPTerm[input]
         case 'custSize':
             return custSize[input]
-        case 'mortgageType' :
+        case 'mortgageType':
             return mortgageType[input]
     }
 
@@ -89,7 +89,7 @@ Vue.filter('bankRound', function(value, precision) {
     return b1;
 });
 
-String.prototype.dict = function(dictType){
+String.prototype.dict = function(dictType) {
     switch (dictType) {
         case 'pricingStatus':
             return pricingStatus[this]
@@ -111,7 +111,7 @@ String.prototype.dict = function(dictType){
             return sceneDPTerm[this]
         case 'custSize':
             return custSize[this]
-        case 'mortgageType' :
+        case 'mortgageType':
             return mortgageType[this]
     }
 }

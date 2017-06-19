@@ -40,11 +40,34 @@ const actions = {
             commit(types.SAVE_LN_PRIC_MORTS_FAILED, { data })
         })
     },
-    deleteLnMorts({ commit }, params) {
+    updateLnMorts({ dispatch, commit }, params) {
+        var url = "/lnmort"
+        api.update(url, { params }, (data) => {
+            commit(types.SAVE_LN_PRIC_MORTS_SUCCESS, { data })
+            var params = {
+                'StartRowNumber': 0,
+                'CurrentPage': 0,
+                'NextPage': 1,
+                'OrderAttr': 'CUST_NAME',
+                'BusinessCode': params.BusinessCode
+            }
+            dispatch('getLnMorts', params)
+        }, (data) => {
+            commit(types.SAVE_LN_PRIC_MORTS_FAILED, { data })
+        })
+    },
+    deleteLnMorts({ dispatch, commit }, params) {
         var url = "/lnmort"
         api.delete(url, { params }, (data, params) => {
             commit(types.SAVE_LN_PRIC_MORTS_SUCCESS, { data })
-
+            var params = {
+                'StartRowNumber': 0,
+                'CurrentPage': 0,
+                'NextPage': 1,
+                'OrderAttr': 'CUST_NAME',
+                'BusinessCode': params.BusinessCode
+            }
+            dispatch('getLnMorts', params)
         }, (data) => {
             commit(types.SAVE_LN_PRIC_MORTS_FAILED, { data })
         })

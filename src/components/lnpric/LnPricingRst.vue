@@ -366,24 +366,28 @@
       },
       handleNext() {
   
-      },
+      }
+    },
       mounted() {
         console.log("第", this.$store.state.lnPricingSetp, "步")
   
         this.$store.state.lnPricingSetp = 2
   
-  
-      }
-    },
+     this.intRateInput = (this.lnPric.IntRate*100).round(2)
+
+      console.log("贷款定价单------mounted-----",this.lnPric)
+      },
     created() {
       console.log("第", this.$store.state.lnPricingSetp, "步")
       this.$store.state.lnPricingSetp = 2
       this.$store.dispatch('getLnPrics', {
         'BusinessCode': this.$route.params.businessCode
       })
+   
     },
     watch: {
       'lnPric': function(val) {
+      
         this.bar.baseOption.series[0].data = [(val.FtpRate * 100).round(2), (val.OcRate * 100).round(2), val.PdRate * 100, (val.LgdRate * 100).round(2), val.EcRate * 100, val.CapCostRate * 100, val.CapPftRate * 100, val.AddTax * 100, val.IncomeTax * 100] //val.FtpRate *100
       }
     }

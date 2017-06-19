@@ -166,7 +166,8 @@ const mutations = {
         //state.message.msg = "保存定价单基本信息失败"
     },
     [types.LN_BASE_PRICING_SUCCESS](state, data) {
-        state.lnPric = data
+        console.log("定价成功返回定价结果---", data)
+        state.lnPrics = data.data
             // state.message.code = 200
             // state.message.msg = "贷款基础定价成功"
     },
@@ -175,7 +176,9 @@ const mutations = {
         // state.message.msg = "贷款基础定价失败"
     },
     [types.LN_INVERSE_PRICING_SUCCESS](state, data) {
-        state.lnPric = data
+        console.log("反算成功返回定价结果---", data)
+
+        state.lnPrics = data.data
             // state.message.code = 200
             // state.message.msg = "贷款反算成功"
     },

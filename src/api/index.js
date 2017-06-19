@@ -116,7 +116,7 @@ export default {
                 // }, 16)
         })
     },
-    update(url, params, cb, errorcb) {
+    update(url, { params }, cb, errorcb) {
         console.log("update -- params--", params)
         var header = {}
         header.sid = sessionStorage.getItem('sid')

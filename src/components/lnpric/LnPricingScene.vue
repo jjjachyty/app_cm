@@ -79,7 +79,7 @@
     </div>
   
   
-    <!--抵押存款出框 -->
+    <!--存款出框 -->
     <div>
       <mu-drawer :open="dpOpen" :docked="false" @close="sceneDpProduct('close')">
         <mu-appbar title="存款" />
@@ -88,7 +88,7 @@
             <mu-sub-header><strong>存款</strong></mu-sub-header>
           </mu-col>
           <mu-col width="60" tablet="65" desktop="65">
-            <mu-text-field hintText="选择存款产品" fullWidth disabled :value="sceneDp.Product" /></mu-col>
+            <mu-text-field hintText="选择存款产品" fullWidth disabled :value="sceneDp.Product.ProductName" /></mu-col>
           <mu-col width="10" tablet="5" desktop="5">
             <mu-icon-button icon="add_box" @click="openPop" iconClass="form-icon-color" />
           </mu-col>
@@ -98,12 +98,12 @@
           <mu-col width="30" tablet="30" desktop="30">
             <mu-sub-header><strong>金额</strong></mu-sub-header>
           </mu-col>
-          <mu-col width="60" tablet="60" desktop="65">
+          <mu-col width="35" tablet="60" desktop="65">
   
-            <mu-text-field hintText="金额" :errorText="principalErr" type="number" v-model="sceneDp.Principal" fullWidth />
+            <mu-text-field hintText="金额"  type="number" v-model="sceneDp.Value" fullWidth />
           </mu-col>
-          <mu-col width="10" tablet="10" desktop="5">
-            <mu-sub-header>元</mu-sub-header>
+          <mu-col width="35" tablet="10" desktop="5">
+            <mu-sub-header>(年日均元)</mu-sub-header>
           </mu-col>
         </mu-row>
   
@@ -112,7 +112,7 @@
             <mu-sub-header><strong>币种</strong></mu-sub-header>
           </mu-col>
           <mu-col width="70" tablet="70" desktop="70">
-            <mu-select-field v-model="sceneDp.Currency" :errorText="currencyErr" fullWidth>
+            <mu-select-field v-model="sceneDp.Currency"  fullWidth>
               <mu-menu-item value="CNY" title="人民币" />
               <mu-menu-item value="USD" title="美元" />
               <mu-menu-item value="HKD" title="港币" />
@@ -129,11 +129,27 @@
     </div>
   
   
+        <div>
+      <mu-popup scrollable position="bottom" popupClass="demo-popup-bottom" :open="bottomPopup">
+        <mu-appbar title="产品">
+          <mu-flat-button slot="right" label="关闭" color="white" @click="closePop" />
+        </mu-appbar>
+        <mu-content-block>
+          <mu-menu desktop autoWidth scrollable>
+            <div v-for="tree in trees">
   
+              <mu-menu-item :title="tree.name" v-if="tree.isParent == 1" value="tree.id" @click="choiseTree(tree)" rightIcon="keyboard_arrow_right" />
+              <mu-menu-item :title="tree.name" v-else value="tree.id" @click="choiseTree(tree)" />
+  
+            </div>
+          </mu-menu>
+        </mu-content-block>
+      </mu-popup>
+    </div>
   </div>
   
   
-  
+
   
   
   </div>
@@ -154,11 +170,15 @@
       return {
         principal: 0,
         dpOpen: false,
-        sceneDp: {}
+        bottomPopup:false,
+        sceneDp: {Product:{ProductName:"",ProductCode:""}}
+        
       }
     },
   
-    computed: { 
+    computed: { ...mapGetters({
+              trees: 'checkOutTree'
+    })
     },
     methods: {
       goBack() {
@@ -183,13 +203,29 @@
       openPop() {
         this.$store.dispatch('getTree', {
           QueryType: "Product",
-          ProductCode: "2"
+          ProductCode: "2001"
         })
         this['bottomPopup'] = true
   
       },
       closePop() {
         this['bottomPopup'] = false
+      },
+      choiseTree(tree) {
+        if (tree.isParent == 1) { //父节点
+          this.$store.dispatch('getTree', {
+            QueryType: "Product",
+            ProductCode: tree.id
+          })
+        } else {
+          // this.$store.state.lnBusiness.Product.ProductName=tree.name
+          // this.$store.state.lnBusiness.Product.ProductCode=tree.id
+          this.sceneDp.Product.ProductName = tree.name
+          this.sceneDp.Product.ProductCode = tree.id
+  
+  
+          this.closePop()
+        }
       },
       handlePrev() {
         router.push({
