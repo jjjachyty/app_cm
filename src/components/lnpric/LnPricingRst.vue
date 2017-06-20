@@ -141,7 +141,7 @@
     </mu-list-item>
   
     <mu-toast v-if="toast" :message="message.code" @close="hideToast" />
-  
+ 
   
   </div>
   </div>
@@ -288,10 +288,10 @@
       }
     },
     computed: {  
-
+    
       ...mapGetters({
         lnPric: 'checkOutLnPric',
-        message:'checkOutMessage'
+        //message:'checkOutMessage'
       }),
       intRateFloat: function(value) {
         if (null == this.intRateInput) {
@@ -321,7 +321,16 @@
         router.go(-1)
       },
       scene() {
-  
+
+                if ('editlnlnpricrst' == this.$route.name) {
+          router.push({
+            name: 'editlnpricingscene',
+            params: {
+              custCode: this.$route.params.custCode,
+              businessCode: this.$route.params.businessCode
+            }
+          })
+        } else {
         router.push({
           name: 'lnpricingscene',
           params: {
@@ -329,6 +338,8 @@
             businessCode: this.$route.params.businessCode
           }
         })
+        }
+  
       },
       calcul() {
         if (this.lnPricIntRate > 0) {
@@ -337,6 +348,8 @@
             IntRate: this.lnPricIntRate
           }
           this.calculState = true
+          this.$store.state.message = {}
+          console.log("状态位calculState",this.calculState)
           this.$store.dispatch("lnInversePricing", params)
           this.clickedCalcul = true
         } else {
@@ -395,14 +408,14 @@
     },
     watch: {
       'lnPric': function(val) {
-       
+        this.calculState= false
          this.intRateInput = (val.IntRate*100).round(2)
         this.bar.baseOption.series[0].data = [(val.FtpRate * 100).round(2), (val.OcRate * 100).round(2), val.PdRate * 100, (val.LgdRate * 100).round(2), val.EcRate * 100, val.CapCostRate * 100, val.CapPftRate * 100, val.AddTax * 100, val.IncomeTax * 100] //val.FtpRate *100
       },
-      'message':function(val){
-        console.log("watch---message",val)
-         this.calculState= false
-      }
+      // 'message':function(val){
+      //   console.log("OneLnNetProfit",this.$store.state.lnpricingModule.lnPric.OneLnNetProfit)
+      //    //this.calculState= false
+      // }
     }
   }
 </script>

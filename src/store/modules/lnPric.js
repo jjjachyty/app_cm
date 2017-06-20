@@ -151,18 +151,18 @@ const mutations = {
                 params.CurrentPage++
                     params.NextPage++
                     params.StartRowNumber = (params.NextPage - 1) * pageSize
+                state.lnPrics = lnPricVar
+                state.params = params
+            } else {
+                state.lnPrics = lnPrics
+                state.params = params
             }
-            lnPricVar.push.apply(lnPricVar, lnPrics)
-
-            params.CurrentPage++
-                params.NextPage++
-                params.StartRowNumber = (params.NextPage - 1) * pageSize
-
+        } else {
+            state.lnPrics = ""
+            state.params = params
         }
 
-        console.log("GET_LN_PRICS_SUCCESS", "params", params)
-        state.lnPrics = lnPricVar
-        state.params = params
+
     },
     [types.GET_LN_PRICS_SUCCESS](state, { lnPrics, params }) {
 
@@ -171,7 +171,7 @@ const mutations = {
 
 
     },
-    [types.GET_LN_BUSINESS_SUCCESS](state, data) {
+    [types.GET_LN_BUSINESS_FAILED](state, data) {
         state.lnPrics = ""
     },
     [types.DELETE_LN_PRIC_SUCCESS](state, data) {
@@ -205,10 +205,9 @@ const mutations = {
     },
     [types.LN_INVERSE_PRICING_SUCCESS](state, { rootState, data }) {
         console.log("反算成功返回定价结果---", data, "rootState", rootState)
-        rootState.message.code = "200"
+        rootState.message.code = "LN_INVERSE_PRICING_SUCCESS"
         rootState.message.msg = "贷款反算成功"
-        state.lnPrics = data
-        state.pricState = 1
+        state.lnPric = data
             // state.message.code = 200
             // state.message.msg = "贷款反算成功"
     },

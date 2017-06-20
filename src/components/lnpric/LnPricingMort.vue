@@ -88,7 +88,7 @@
     </div>
     <!--抵押品弹出框 -->
     <div>
-      <mu-drawer :open="mortOpen" :docked="false" @close="mortToggle('close')">
+      <mu-drawer :open="mortOpen" :docked="false" @close="mortToggle('drawerclose')">
         <mu-appbar title="抵押品" />
         <mu-row class="context">
           <mu-col width="30" tablet="30" desktop="30">
@@ -138,7 +138,7 @@
     </div>
     <!--担保人弹出框 -->
     <div>
-      <mu-drawer right :open="guaranteOpen" :docked="false" @close="guaranteToggle('close')">
+      <mu-drawer right :open="guaranteOpen" :docked="false" @close="guaranteToggle('drawerclose')">
         <mu-appbar title="保证人" />
         <mu-row class="context">
           <mu-col width="30" tablet="30" desktop="30">
@@ -385,8 +385,7 @@
   
             }
         }
-        console.log(this.mortOpen)
-        //this.docked = !flag
+
       },
       handlePrev() {
         router.push({
@@ -408,6 +407,16 @@
         this.$store.dispatch('lnBasePricing', params)
 
         
+
+        if ('editlnpricmort' == this.$route.name) {
+          router.push({
+            name: 'editlnlnpricrst',
+            params: {
+              custCode: this.$route.params.custCode,
+              businessCode: this.$route.params.businessCode
+            }
+          })
+        } else {
         router.push({
           name: 'lnpricrst',
           params: {
@@ -415,6 +424,8 @@
             businessCode: this.$route.params.businessCode
           }
         })
+        }
+
       },
       openPop() {
         this.$store.dispatch('getTree', {

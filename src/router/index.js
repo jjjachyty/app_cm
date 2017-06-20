@@ -53,12 +53,15 @@ const routes = [{
     //     component: LnPricing,
     //     children: [
     { path: '/lnpricinfo/custcode/:custCode', name: 'lnpricinfo', component: LnPricingBase },
-    { path: '/editlnpricinfo/custcode/:custCode/businesscode/:businessCode', name: 'editlnpricinfo', component: LnPricingBase },
-    { path: '/editlnpricmort/custcode/:custCode/businesscode/:businessCode', name: 'editlnpricmort', component: LnPricingMort },
 
     { path: '/lnpricmort/custcode/:custCode/businesscode/:businessCode', name: 'lnpricmort', component: LnPricingMort },
     { path: '/lnpricrst/custcode/:custCode/businesscode/:businessCode', name: 'lnpricrst', component: LnPricingRst },
-    { path: '/lnpricsene/custcode/:custCode/businesscode/:businessCode', name: 'lnpricingscene', component: LnPricingScene },
+    { path: '/lnpricingscene/custcode/:custCode/businesscode/:businessCode', name: 'lnpricingscene', component: LnPricingScene },
+
+    { path: '/editlnpricinfo/custcode/:custCode/businesscode/:businessCode', name: 'editlnpricinfo', component: LnPricingBase },
+    { path: '/editlnpricmort/custcode/:custCode/businesscode/:businessCode', name: 'editlnpricmort', component: LnPricingMort },
+    { path: '/editlnlnpricrst/custcode/:custCode/businesscode/:businessCode', name: 'editlnlnpricrst', component: LnPricingRst },
+    { path: '/editlnpricingscene/custcode/:custCode/businesscode/:businessCode', name: 'editlnpricingscene', component: LnPricingScene },
 
     //     ]
     // }, 
