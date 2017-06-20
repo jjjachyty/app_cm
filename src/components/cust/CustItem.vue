@@ -67,7 +67,7 @@ export default {
     setTimeout(() => {
      this.$store.dispatch('getMyLnCusts',this.$store.state.lncustModule.params)
      this.loading = false
-       }, 16)
+       }, 200)
     },
     custBrief(custCode){
               this.$store.dispatch('getLnCust',{'CustCode':custCode})

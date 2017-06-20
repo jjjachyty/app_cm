@@ -88,9 +88,9 @@
             <mu-icon value="explore" color="blue" /> {{intRate | bankRound(2)}} %
           </mu-flexbox-item>
         </mu-flexbox>
-        <div class="gutter" v-show="lnPric.IntRate != 0">
-          <mu-raised-button label="反算" class="demo-raised-button " @click="calcul" primary fullWidth/>
-        </div>
+        <div class="gutter" v-show="intRateInput != 0">
+          <mu-raised-button label="反算" class="demo-raised-button " @click="calcul" primary fullWidth :disabled="calculState"/>
+       
         <div v-show="clickedCalcul">
           <mu-list-item title="反算结果" toggleNested>
             <mu-list-item slot="nested" disabled>
@@ -132,14 +132,15 @@
             </mu-list-item>
           </mu-list-item>
           <div class="gutter">
-            <mu-raised-button label="保存" class="demo-raised-button " @click="save" primary fullWidth/>
+            <mu-raised-button label="保存" class="demo-raised-button " @click="save" primary :disabled="calculState" fullWidth/>
           </div>
         </div>
+         </div>
       </mu-list-item>
   
     </mu-list-item>
   
-    <mu-toast v-if="toast" :message="message" @close="hideToast" />
+    <mu-toast v-if="toast" :message="message.code" @close="hideToast" />
   
   
   </div>
@@ -163,8 +164,9 @@
         lnPricIntRate: null,
         intRateFloatInput: null,
         clickedCalcul: false,
+        calculState:false,
         toast: false,
-        message: "",
+        //message: "",
         // lnPric:{
         //   BaseRate:0.0435,
         //   BottomRate:0.078,
@@ -285,9 +287,11 @@
         }
       }
     },
-    computed: {
+    computed: {  
+
       ...mapGetters({
-        lnPric: 'checkOutLnPrics'
+        lnPric: 'checkOutLnPric',
+        message:'checkOutMessage'
       }),
       intRateFloat: function(value) {
         if (null == this.intRateInput) {
@@ -332,11 +336,12 @@
             BusinessCode: this.$route.params.businessCode,
             IntRate: this.lnPricIntRate
           }
+          this.calculState = true
           this.$store.dispatch("lnInversePricing", params)
           this.clickedCalcul = true
         } else {
           this.toast = true
-          this.message = "请输入正数的执行利率"
+          this.message.code = "请输入正数的执行利率"
   
           if (this.toastTimer) clearTimeout(this.toastTimer)
           this.toastTimer = setTimeout(() => {
@@ -345,14 +350,17 @@
   
         }
       },
+      hideToast(){
+
+      },
       save() {
         this.lnPric.Status = "2" //计算完成并保存
         this.lnPric.SceneRate = null
   
         this.$store.dispatch("saveLnPric", this.lnPric)
-        router.push({
-          name: 'list'
-        })
+
+
+
       },
       handlePrev() {
         router.push({
@@ -372,8 +380,8 @@
         console.log("第", this.$store.state.lnPricingSetp, "步")
   
         this.$store.state.lnPricingSetp = 2
-  
-     this.intRateInput = (this.lnPric.IntRate*100).round(2)
+        console.log("执行利率",this.lnPric.IntRate)
+    
 
       console.log("贷款定价单------mounted-----",this.lnPric)
       },
@@ -387,8 +395,13 @@
     },
     watch: {
       'lnPric': function(val) {
-      
+       
+         this.intRateInput = (val.IntRate*100).round(2)
         this.bar.baseOption.series[0].data = [(val.FtpRate * 100).round(2), (val.OcRate * 100).round(2), val.PdRate * 100, (val.LgdRate * 100).round(2), val.EcRate * 100, val.CapCostRate * 100, val.CapPftRate * 100, val.AddTax * 100, val.IncomeTax * 100] //val.FtpRate *100
+      },
+      'message':function(val){
+        console.log("watch---message",val)
+         this.calculState= false
       }
     }
   }

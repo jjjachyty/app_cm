@@ -1,5 +1,8 @@
 <template>
 <div>
+{{auth}}
+        <mu-avatar  color="blueGrey50" backgroundColor="teal500" slot="leftAvatar"></mu-avatar>
+
           <mu-raised-button label="退出" class="demo-raised-button" @click="loginOut" primary fullWidth/>
 
 </div>
@@ -12,8 +15,10 @@
     mapActions
   } from 'vuex'
   export default {
-    components: {
-
+    components: {...mapGetters({
+ auth:'checkOutAuth'
+    })
+         
     },
     data() {
       return {

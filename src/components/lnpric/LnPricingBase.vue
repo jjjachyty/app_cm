@@ -127,7 +127,8 @@
      <mu-row >
             <mu-col width="35" tablet="40" desktop="40"></mu-col>
             <mu-col width="50" tablet="30" desktop="30">
-        <mu-raised-button  label="下一步" :disabled="activeStep >= 2"  @click="handleNext" backgroundColor="#a4c639"/>
+              <br>
+        <mu-raised-button  label="下一步" :disabled="activeStep >= 2"  @click="handleNext" backgroundColor="#009688"/>
         </mu-col>
         <mu-col width="15" tablet="30" desktop="30"></mu-col>
         </mu-row>
@@ -166,8 +167,8 @@ const rateType={
 
 const rpymType={
   '一次还款':[''],
-  '等额本金':['一次还本','按月还本','按季还本','按年还本'],
-  '等额本息':['一次还本','按月还本','按季还本','按年还本']
+  '等额本金':['按月还本','按季还本','按年还本'],
+  '等额本息':['按月还本','按季还本','按年还本']
 }
 
 const rateTypeDict={'固定利率':'1','浮动利率':'2'}
@@ -294,7 +295,7 @@ export default {
       }
        this.rateType = [this.rateTypeItem, this.rateTypeSubItem]
       this.lnBusiness.RateType=rateTypeDict[this.rateTypeItem]
-      this.lnBusiness.RepriceFreq=repriceFreqDict[this.rateTypeSubItem]
+      this.lnBusiness.RepriceFreq=parseInt(repriceFreqDict[this.rateTypeSubItem])
     },     
     rpymTypeChange (value, index) {
       switch (index) {
@@ -310,20 +311,20 @@ export default {
           break
       }
        this.rpymType = [this.rpymTypeItem, this.rpymTypeSubItem]
-       this.lnBusiness.RpymType=rpymTypeDict[this.rpymTypeItem]
-       this.lnBusiness.RpymCapitalFreq=rpymCapitalFreqDict[this.rpymTypeSubItem]
+       this.lnBusiness.RpymType=parseInt(rpymTypeDict[this.rpymTypeItem])
+       this.lnBusiness.RpymCapitalFreq=parseInt(rpymCapitalFreqDict[this.rpymTypeSubItem])
 
     },    handleNext () {
       var lnBusiness = this.lnBusiness
       
       lnBusiness.Cust.CustCode = this.$route.params.custCode
       //lnBusiness.Cust.CustName = this.$store.state.lncust.CustName
-      lnBusiness.RateType=parseInt(rateTypeDict[this.rateTypeItem])
-      lnBusiness.RepriceFreq=parseInt(repriceFreqDict[this.rateTypeSubItem])
-      lnBusiness.RpymType=parseInt(rpymTypeDict[this.rpymTypeItem])
-      lnBusiness.RpymCapitalFreq=parseInt(rpymCapitalFreqDict[this.rpymTypeSubItem])
+      lnBusiness.RateType=rateTypeDict[this.rateType[0]]
+      lnBusiness.RepriceFreq=parseInt(repriceFreqDict[this.rateType[1]])
+      lnBusiness.RpymType=rpymTypeDict[this.rpymType[0]]
+      lnBusiness.RpymCapitalFreq=parseInt(rpymCapitalFreqDict[this.rpymType[1]])
       lnBusiness.Principal = parseInt(lnBusiness.Principal)
-
+      lnBusiness.Term = parseInt(lnBusiness.Term)
 
       lnBusiness.Status="-1"
 
@@ -331,7 +332,7 @@ export default {
    
       if(this.lnBusinessValid == 3){
         console.log("LnPricingBase.vue----",lnBusiness)
-        this.$store.state.lnBusiness
+        
 
        this.$store.dispatch('saveLnBusinessInfo',lnBusiness)
 
@@ -339,7 +340,7 @@ export default {
               router.push({ name: 'editlnpricmort', params: { custCode: this.$route.params.custCode, businessCode: this.$route.params.businessCode } })
 
        }else{
-              router.push({ name: 'lnpricmort', params: { custCode: this.$route.params.custCode, businessCode: this.$route.params.businessCode } })
+              router.push({ name: 'lnpricmort', params: { custCode: this.$route.params.custCode, businessCode: this.lnBusiness.BusinessCode } })
 
        }
 
@@ -421,15 +422,19 @@ export default {
       //     values: ['固定利率','']
       //   }
       // ],
-      var rateTypeVar = this.$store.state.lnBusiness.RateType
+      var rateTypeVar = String(this.$store.state.lnBusiness.RateType)
       var repriceFreqVar = String(this.$store.state.lnBusiness.RepriceFreq)
-      var rpymTypeVar = this.$store.state.lnBusiness.RpymType
+      var rpymTypeVar = String(this.$store.state.lnBusiness.RpymType)
       var rpymCapitalFreqVar = String(this.$store.state.lnBusiness.RpymCapitalFreq)
 
 
+      console.log("rateTypeVar",rateTypeVar,"repriceFreqVar",repriceFreqVar,"rpymTypeVar",rpymTypeVar,"rpymCapitalFreqVar",rpymCapitalFreqVar)
+
        this.rateTypeSlots[1].values= rateType[rateTypeVar.dict('rateType')]
        this.rateType = [rateTypeVar.dict('rateType'), repriceFreqVar.dict('repriceFreq')]
-   
+       
+       this.rateTypeItem = rateTypeVar.dict('rateType')
+        this.rateTypeSubItem = repriceFreqVar.dict('repriceFreq')
 
     // switch(rpymType){
     //     case '1': //一次还款
@@ -443,6 +448,8 @@ export default {
         this.rpymTypeSlots[1].values=rpymType[rpymTypeVar.dict('rpymType')]
         this.rpymType=[rpymTypeVar.dict('rpymType'),rpymCapitalFreqVar.dict('rpymCapitalFreq')]
 
+        this.rpymTypeItem = rpymTypeVar.dict('rpymType')
+        this.rpymTypeSubItem = rpymCapitalFreqVar.dict('rpymCapitalFreq')
        
 
     console.log("mounted",this.$store.state.lnBusiness.BusinessCode)

@@ -6,3 +6,4 @@ export const checkOutLnBusiness = function(state) {
 }
 export const checkOutLnPricingSetp = state => state.lnPricingSetp
 export const checkOutMessage = state => state.message
+export const checkOutAuth = state => state.auth

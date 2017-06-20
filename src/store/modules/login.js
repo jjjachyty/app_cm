@@ -23,14 +23,15 @@ const actions = {
 
             commit(types.LOGIN_FAILED)
         })
-    },    loginOut({ rootState, commit }, loginUser) {
+    },
+    loginOut({ rootState, commit }, loginUser) {
 
         loginApi.loginOut(loginUser, (auth) => {
 
             console.log("退出登录----", auth, rootState)
             commit(types.LOGOUT_SUCCESS, { rootState, auth })
                 //commit(types.LOGIN_SUCCESS, { sid })
-            
+
         }, () => {
 
             commit(types.LOGOUT_FAILED)
@@ -43,11 +44,13 @@ const mutations = {
     //登录成功
     [types.LOGIN_SUCCESS](state, { rootState, auth }) {
         sessionStorage.setItem('sid', auth.sid)
+        rootState.auth = auth.data
     },
     //登录失败
     [types.LOGIN_FAILED](state) {
         state.currentUser = ""
-    },[types.LOGOUT_SUCCESS](state, { rootState, auth }) {
+    },
+    [types.LOGOUT_SUCCESS](state, { rootState, auth }) {
         //sessionStorage.setItem('sid', "")
         rootState.auth = ""
     },
@@ -56,7 +59,7 @@ const mutations = {
         //state.currentUser = ""
         console.log("登出失败")
     }
-    
+
 }
 
 

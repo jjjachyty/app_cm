@@ -49,7 +49,7 @@ const actions = {
                 'CurrentPage': 0,
                 'NextPage': 1,
                 'OrderAttr': 'CUST_NAME',
-                'BusinessCode': params.BusinessCode
+                'BusinessCode': data.BusinessCode
             }
             dispatch('getLnMorts', params)
         }, (data) => {

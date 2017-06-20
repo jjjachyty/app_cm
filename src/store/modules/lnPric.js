@@ -7,7 +7,14 @@ const state = {
     lnPrics: [],
     lnPric: {},
     lnBusinessCode: "",
-    activeSteps: 0
+    activeSteps: 0,
+    params: {
+        StartRowNumber: 0,
+        CurrentPage: 0,
+        CustCode: 0,
+        NextPage: 0,
+        OrderAttr: 'CREATE_TIME'
+    }
 }
 
 // getters
@@ -35,9 +42,10 @@ const actions = {
 
         }
         api.getPage(url, params, (lnPrics, params) => {
-            commit(types.GET_LN_PRICS_SUCCESS, { lnPrics, params })
+            console.log("getLnBusiness---state.lnPrics--", state.lnPrics, "lnPrics", lnPrics)
+            commit(types.GET_LN_BUSINESS_SUCCESS, { lnPrics, params })
         }, (data) => {
-            commit(types.GET_LN_PRICS_FAILED, { data })
+            commit(types.GET_LN_BUSINESS_FAILED, { data })
         })
     },
     getLnPrics({ commit }, params) {
@@ -56,6 +64,7 @@ const actions = {
 
         }
         api.getPage(url, params, (lnPrics, params) => {
+            console.log("types.GET_LN_PRICS_SUCCESS---getLnPrics--", lnPrics)
             commit(types.GET_LN_PRICS_SUCCESS, { lnPrics, params })
         }, (data) => {
             commit(types.GET_LN_PRICS_FAILED, { data })
@@ -79,7 +88,7 @@ const actions = {
             commit(types.SAVE_LN_PRICING_INFO_SUCCESS, { data })
             console.log("SAVE_LN_PRICING_INFO_SUCCESS", data)
 
-            router.push({ name: 'lnpricmort', params: { custCode: params.Cust.CustCode, businessCode: params.BusinessCode } })
+            //router.push({ name: 'lnpricmort', params: { custCode: params.Cust.CustCode, businessCode: params.BusinessCode } })
 
         }, (data) => {
             console.log("SAVE_LN_PRICING_INFO_FAILED", data)
@@ -87,28 +96,29 @@ const actions = {
         })
 
     },
-    lnBasePricing({ commit }, params) {
+    lnBasePricing({ rootState, commit }, params) {
         var url = "/pricing/lnbase"
             //params.Principal = params.Principal * 10000
         console.log("开始基准定价", params)
         api.post(url, { params }, (data) => {
-            commit(types.LN_BASE_PRICING_SUCCESS, { data })
+            commit(types.LN_BASE_PRICING_SUCCESS, { rootState, data })
+
             console.log("LN_BASE_PRICING_SUCCESS", data)
         }, (data) => {
             console.log("LN_BASE_PRICING_FAILED", data)
-            commit(types.LN_BASE_PRICING_FAILED, { data })
+            commit(types.LN_BASE_PRICING_FAILED, { rootState, data })
         })
     },
-    lnInversePricing({ commit }, params) {
+    lnInversePricing({ rootState, commit }, params) {
         var url = "/pricing/lninverse"
             //params.Principal = params.Principal * 10000
         console.log("开始反算定价", params)
         api.post(url, { params }, (data) => {
-            commit(types.LN_INVERSE_PRICING_SUCCESS, { data })
+            commit(types.LN_INVERSE_PRICING_SUCCESS, { rootState, data })
             console.log("LN_INVERSE_PRICING_SUCCESS", data)
         }, (data) => {
             console.log("LN_INVERSE_PRICING_FAILED", data)
-            commit(types.LN_INVERSE_PRICING_FAILED, { data })
+            commit(types.LN_INVERSE_PRICING_FAILED, { rootState, data })
         })
     },
     saveLnPric({ commit }, params) {
@@ -117,6 +127,9 @@ const actions = {
         console.log("开始保存定价单", params)
         api.update(url, { params }, (data) => {
             commit(types.SAVE_LN_PRICING_SUCCESS, { data })
+            router.push({
+                name: 'list'
+            })
             console.log("SAVE_LN_PRICING_SUCCESS", data)
         }, (data) => {
             console.log("SAVE_LN_PRICING_FAILED", data)
@@ -128,23 +141,37 @@ const actions = {
 
 // mutations
 const mutations = {
-    [types.GET_LN_PRICS_SUCCESS](state, { lnPrics, params }) {
+    [types.GET_LN_BUSINESS_SUCCESS](state, { lnPrics, params }) {
+        console.log("state.lnPrics", state.lnPrics)
         var lnPricVar = state.lnPrics //.length > 0 ? state.lnPrics : new Array()
-        if (null != lnPrics && lnPrics.length > 0 && params.StartRowNumber > 0) {
+        if (null != lnPrics && lnPrics.length > 0) {
+            if (params.StartRowNumber > 0) {
+                lnPricVar.push.apply(lnPricVar, lnPrics)
+
+                params.CurrentPage++
+                    params.NextPage++
+                    params.StartRowNumber = (params.NextPage - 1) * pageSize
+            }
             lnPricVar.push.apply(lnPricVar, lnPrics)
 
             params.CurrentPage++
                 params.NextPage++
                 params.StartRowNumber = (params.NextPage - 1) * pageSize
-        } else if (undefined == params.CurrentPage || params.CurrentPage < 1) {
-            lnPricVar = lnPrics
+
         }
 
-
+        console.log("GET_LN_PRICS_SUCCESS", "params", params)
         state.lnPrics = lnPricVar
         state.params = params
     },
-    [types.GET_LN_PRICS_FAILED](state, data) {
+    [types.GET_LN_PRICS_SUCCESS](state, { lnPrics, params }) {
+
+        state.lnPric = lnPrics
+        console.log("types.GET_LN_PRICS_SUCCESS", state.lnPric, lnPrics)
+
+
+    },
+    [types.GET_LN_BUSINESS_SUCCESS](state, data) {
         state.lnPrics = ""
     },
     [types.DELETE_LN_PRIC_SUCCESS](state, data) {
@@ -165,24 +192,27 @@ const mutations = {
         //state.message.code = 400
         //state.message.msg = "保存定价单基本信息失败"
     },
-    [types.LN_BASE_PRICING_SUCCESS](state, data) {
+    [types.LN_BASE_PRICING_SUCCESS](state, { rootState, data }) {
         console.log("定价成功返回定价结果---", data)
-        state.lnPrics = data.data
-            // state.message.code = 200
-            // state.message.msg = "贷款基础定价成功"
-    },
-    [types.LN_BASE_PRICING_FAILED](state, data) {
-        // state.message.code = 400
-        // state.message.msg = "贷款基础定价失败"
-    },
-    [types.LN_INVERSE_PRICING_SUCCESS](state, data) {
-        console.log("反算成功返回定价结果---", data)
+        state.lnPrics = data
 
-        state.lnPrics = data.data
+    },
+    [types.LN_BASE_PRICING_FAILED](state, { rootState, data }) {
+        rootState.message.code = "400"
+        rootState.message.msg = data.ErrMsg
+            // state.message.code = 400
+            // state.message.msg = "贷款基础定价失败"
+    },
+    [types.LN_INVERSE_PRICING_SUCCESS](state, { rootState, data }) {
+        console.log("反算成功返回定价结果---", data, "rootState", rootState)
+        rootState.message.code = "200"
+        rootState.message.msg = "贷款反算成功"
+        state.lnPrics = data
+        state.pricState = 1
             // state.message.code = 200
             // state.message.msg = "贷款反算成功"
     },
-    [types.LN_INVERSE_PRICING_FAILED](state, data) {
+    [types.LN_INVERSE_PRICING_FAILED](state, { rootState, data }) {
         // state.message.code = 400
         // state.message.msg = "贷款反算失败"
     },

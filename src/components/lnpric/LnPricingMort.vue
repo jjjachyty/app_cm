@@ -131,8 +131,9 @@
             </mu-select-field>
           </mu-col>
         </mu-row>
-        <mu-list-item @click="mortToggle('close')" title="保存" />
-  
+        <!--<mu-list-item @click="mortToggle('close')" title="保存" />-->
+              <mu-raised-button label="保存"  @click="mortToggle('close')" backgroundColor="#009688" fullWidth/>
+
       </mu-drawer>
     </div>
     <!--担保人弹出框 -->
@@ -162,8 +163,10 @@
             </mu-select-field>
           </mu-col>
         </mu-row>
-        <mu-list-item @click="guaranteToggle('close')" title="保存" />
-  
+        <!--<mu-list-item @click="guaranteToggle('close')" title="保存" backgroundColor="#a4c639"/>-->
+                  <mu-raised-button label="保存"  @click="guaranteToggle('close')" backgroundColor="#009688" fullWidth/>
+
+
       </mu-drawer>
     </div>
   
@@ -190,7 +193,7 @@
         <mu-col width="30" tablet="40" desktop="40"></mu-col>
         <mu-col width="40" tablet="30" desktop="30">
           <!--<mu-raised-button label="上一步" :disabled="activeStep === 0" @click="handlePrev" />-->
-          <mu-raised-button label="下一步" :disabled="activeStep >=  3" @click="handleNext" backgroundColor="#a4c639" />
+          <mu-raised-button label="下一步" :disabled="activeStep >=  3" @click="handleNext" backgroundColor="#009688" />
         </mu-col>
         <mu-col width="10" tablet="30" desktop="30"></mu-col>
       </mu-row>
@@ -403,7 +406,7 @@
         params.StockUsage = 0
   
         this.$store.dispatch('lnBasePricing', params)
-  
+
         
         router.push({
           name: 'lnpricrst',
@@ -526,7 +529,7 @@
       this.$store.dispatch('getLnMorts', params)
       this.$store.dispatch('getLnGuarantes', params)
   
-      this.$store.state.lnPricingSetp = 1
+      //this.$store.state.lnPricingSetp = 1
     },
     watch: {
       'dataSource': function() {
@@ -542,7 +545,7 @@
 
 <style scoped>
   .icon-button {
-    color: teal;
+    background-color:  teal;
   }
   
   .mu-toast {

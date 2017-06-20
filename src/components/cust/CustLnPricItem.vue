@@ -1,6 +1,6 @@
 <template>
 
-<div class="demo-infinite-container">
+<div class="pric-infinite-container">
 
   <mu-list>
     <template v-for="item in lnPrics">
@@ -34,7 +34,7 @@
    
     </template>
   </mu-list>
-  <mu-infinite-scroll :scroller="scroller" :loading="loading" @load="loadMore"/>
+  <mu-infinite-scroll :scroller="scroller" :loading="loading" @load="loadMorePric"/>
      
     <mu-dialog :open="dialog" title="提示">
     确定删除？
@@ -60,7 +60,6 @@ export default {
     },
   data () {
     return {
-      num: 15,
       loading: false,
       scroller: null,
       dialog: false,
@@ -77,17 +76,14 @@ export default {
     messgae: 'checkOutMessage'
   }),
   methods: {
-    loadMore () {
+    loadMorePric () {
       this.loading = true
+
     setTimeout(() => {
-           var params = {'StartRowNumber':0, 
-        'CurrentPage':0,
-        'CustCode':this.$route.params.custcode,
-        'NextPage':1,
-        'OrderAttr':'CREATE_TIME'}
-    this.$store.dispatch('getLnBusiness',params)
+    this.$store.dispatch('getLnBusiness',this.$store.state.lnpricingModule.params)
+
      this.loading = false
-       }, 100)
+       }, 2000)
     },
     custBrief(custID){
               router.push({name:"custbrief",params:{custid:custID}})
@@ -139,9 +135,8 @@ export default {
 </script>
 
 <style lang="css">
-.demo-infinite-container{
-       height: calc(100vh - 160px);     
-
+.pric-infinite-container{
+  height: calc(100vh - 210px);     
   overflow: auto;
   -webkit-overflow-scrolling: touch;
   border: 1px solid #d9d9d9;

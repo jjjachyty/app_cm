@@ -80,9 +80,9 @@ export default {
             if ("200" == response.data.RstCode) {
                 console.log("delete - 200 - cb")
 
-                setTimeout(() => {
-                    cb(response.data, params)
-                }, 16)
+                //setTimeout(() => {
+                cb(response.data, params)
+                    // }, 16)
             } else {
                 console.log("delete - not200 - errorcb")
                 errorcb(response.data)

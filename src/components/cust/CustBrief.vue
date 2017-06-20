@@ -263,7 +263,7 @@ export default {
         BaseRateType: "1",
         MainMortgageType: "4"
     }
-        router.push({name:'lnpricinfo',params:{custCode:this.cust.CustCode,businessCode:''}})
+        router.push({name:'lnpricinfo',params:{custCode:this.cust.CustCode}})
     }
     
   },created(){
@@ -282,7 +282,7 @@ export default {
 }
 </script>
 
-<style lang="css">
+<style lang="css" scoped>
 .padd-left{
     padding-left: 16px;
     padding-right: 16px;
@@ -293,5 +293,6 @@ export default {
 }
 .echarts {
 height: 160px;
+left:16px;
 }
 </style>
