@@ -128,7 +128,7 @@
             <mu-col width="35" tablet="40" desktop="40"></mu-col>
             <mu-col width="50" tablet="30" desktop="30">
               <br>
-        <mu-raised-button  label="下一步" :disabled="activeStep >= 2"  @click="handleNext" backgroundColor="#009688"/>
+        <mu-raised-button  label="下一步" :disabled="activeStep >= 2"  @click="handleNext" primary/>
         </mu-col>
         <mu-col width="15" tablet="30" desktop="30"></mu-col>
         </mu-row>
@@ -323,7 +323,7 @@ export default {
       lnBusiness.RepriceFreq=parseInt(repriceFreqDict[this.rateType[1]])
       lnBusiness.RpymType=rpymTypeDict[this.rpymType[0]]
       lnBusiness.RpymCapitalFreq=parseInt(rpymCapitalFreqDict[this.rpymType[1]])
-      lnBusiness.Principal = parseInt(lnBusiness.Principal)
+      lnBusiness.Principal = parseFloat(lnBusiness.Principal)
       lnBusiness.Term = parseInt(lnBusiness.Term)
 
       lnBusiness.Status="-1"
@@ -336,13 +336,9 @@ export default {
 
        this.$store.dispatch('saveLnBusinessInfo',lnBusiness)
 
-       if ('editlnpricinfo' == this.$route.name){
-              router.push({ name: 'editlnpricmort', params: { custCode: this.$route.params.custCode, businessCode: this.$route.params.businessCode } })
 
-       }else{
-              router.push({ name: 'lnpricmort', params: { custCode: this.$route.params.custCode, businessCode: this.lnBusiness.BusinessCode } })
+              router.push({ name: 'lnpricmort', params: { custCode: this.$route.params.custCode, businessCode: this.$route.params.businessCode } })
 
-       }
 
       //  if(this.lnBusinessStatus.code == 200){
       //       this.activeStep++
@@ -385,12 +381,12 @@ export default {
 
     },
     handlePrev () {
-      if(this.$route.name=='editlnpricinfo'){
-                router.push({name:'list'})
+           
 
+      if("edit" == this.$store.state.editOrAdd){
+                router.push({name:'list'})
       }else{
-      router.push({name:'custbrief',params:{custCode:$route.params.custCode}})
-    
+      router.push({name:'custbrief',params:{custCode:this.$route.params.custCode}})
       }
 
     },

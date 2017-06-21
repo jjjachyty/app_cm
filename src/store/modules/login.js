@@ -44,7 +44,7 @@ const mutations = {
     //登录成功
     [types.LOGIN_SUCCESS](state, { rootState, auth }) {
         sessionStorage.setItem('sid', auth.sid)
-        rootState.auth = auth.data
+        rootState.auth = auth.data[0]
     },
     //登录失败
     [types.LOGIN_FAILED](state) {

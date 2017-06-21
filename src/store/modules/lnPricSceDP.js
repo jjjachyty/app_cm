@@ -26,15 +26,26 @@ const actions = {
             commit(types.GET_LN_PRIC_SCENE_DP_FAILED, { data })
         })
     },
-    addLnSceneDP({ commit }, params) {
+    addLnSceneDP({ dispatch, commit }, params) {
         var url = "/scenedp"
-        api.save(url, { params }, (lnSceneDP, params) => {
+        api.save(url, { params }, (lnSceneDP) => {
             commit(types.ADD_LN_PRIC_SCENE_DP_SUCCESS, { lnSceneDP })
+            dispatch('getLnSceneDPs', { BusinessCode: params.BusinessCode })
 
         }, (data) => {
             commit(types.ADD_LN_PRIC_SCENE_DP_FAILED, { data })
         })
     },
+    updateLnSceneDP({ dispatch, commit }, params) {
+        var url = "/scenedp"
+        api.update(url, { params }, (lnSceneDP) => {
+            commit(types.ADD_LN_PRIC_SCENE_DP_SUCCESS, { lnSceneDP })
+            dispatch('getLnSceneDPs', { BusinessCode: params.BusinessCode })
+        }, (data) => {
+            commit(types.ADD_LN_PRIC_SCENE_DP_FAILED, { data })
+        })
+    },
+
     delLnSceneDP({ dispatch, commit }, params) {
         var url = "/scenedp"
         api.delete(url, { params }, (lnSceneDP, params) => {

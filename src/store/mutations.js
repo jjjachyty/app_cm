@@ -3,6 +3,7 @@ import * as types from './mutation-types'
 
 export const state = {
     tree: [],
+    editOrAdd: "add",
     lnBusiness: {
         BusinessCode: "",
         Product: {

@@ -128,17 +128,16 @@
         industry: {}
       }
     },
-    computed: mapGetters({
-      lnPric: 'checkOutLnPrics'
-    }),
+    computed: {...mapGetters({
+      lnPric: 'checkOutLnPric'
+    })},
     methods: {
       custBrief(custID) {
 
       },
       goBack() {
-                            router.push({name:"custpriclist",params:{custcode:'CUST20160829134443010'}})
-
-                    //router.go(-1)
+     
+      router.push({name:'list'})
       }
     },
     created() {

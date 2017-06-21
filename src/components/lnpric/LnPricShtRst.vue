@@ -69,8 +69,10 @@
                {{ this.intRateFloat * 100 | bankRound(2)}} %
               </mu-flexbox-item>
             </mu-flexbox>
+            <br>
                 <mu-divider />
-            <mu-flexbox>
+                
+            <!--<mu-flexbox>
               <mu-flexbox-item>
                 单ROC
               </mu-flexbox-item>
@@ -97,7 +99,67 @@
               <mu-flexbox-item>
                {{ lnPric.SumEva  | bankRound(2)}}
               </mu-flexbox-item>
-            </mu-flexbox>
+            </mu-flexbox>-->
+            <mu-flexbox>
+            <mu-flexbox-item>
+  
+            </mu-flexbox-item>
+            <mu-flexbox-item>
+              净利润(元)
+            </mu-flexbox-item>
+            <mu-flexbox-item>
+              EVA(元)
+            </mu-flexbox-item>
+            <mu-flexbox-item>
+              RAROC(%)
+            </mu-flexbox-item>
+          </mu-flexbox>
+  
+          <mu-flexbox>
+            <mu-flexbox-item>
+              单笔
+            </mu-flexbox-item>
+            <mu-flexbox-item>
+              {{lnPric.OneLnNetProfit | bankRound(2)}}
+            </mu-flexbox-item>
+            <mu-flexbox-item>
+              {{lnPric.OneLnYearEva | bankRound(2)}}
+            </mu-flexbox-item>
+            <mu-flexbox-item>
+              {{lnPric.OneLnRaroc * 100 | bankRound(2)}}
+            </mu-flexbox-item>
+          </mu-flexbox>
+  
+            <mu-flexbox>
+            <mu-flexbox-item>
+              派生
+            </mu-flexbox-item>
+            <mu-flexbox-item>
+              {{lnPric.SceneNetPorfit | bankRound(2)}}
+            </mu-flexbox-item>
+            <mu-flexbox-item>
+              {{lnPric.SceneYearEva | bankRound(2)}}
+            </mu-flexbox-item>
+            <mu-flexbox-item>
+              
+            </mu-flexbox-item>
+          </mu-flexbox>
+
+                    <mu-flexbox>
+            <mu-flexbox-item>
+              综合
+            </mu-flexbox-item>
+            <mu-flexbox-item>
+              {{lnPric.SumNetProfit | bankRound(2)}}
+            </mu-flexbox-item>
+            <mu-flexbox-item>
+              {{lnPric.SumEva | bankRound(2)}}
+            </mu-flexbox-item>
+            <mu-flexbox-item>
+              {{lnPric.SumRaroc * 100 | bankRound(2)}}
+            </mu-flexbox-item>
+          </mu-flexbox>
+
  <mu-divider />
          <chart  :options="bar" auto-resize ></chart>
 
@@ -319,7 +381,7 @@
       }
     },
     computed: mapGetters({
-      lnPric: 'checkOutLnPrics'
+      lnPric: 'checkOutLnPric'
     }),mounted(){
  //this.bar.baseOption.series[0].data[0] = 2
     },

@@ -174,7 +174,7 @@
       }
     },
     computed: mapGetters({
-      lnPric: 'checkOutLnPrics',
+      lnPric: 'checkOutLnPric',
       lnMorts:'checkOutLnMorts',
       lnGuarantes:'checkOutLnGuarantes',
       lnSceneDPs:'checkOutLnSceneDPs',

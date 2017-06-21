@@ -127,7 +127,7 @@
       }
     },
     computed: mapGetters({
-      lnPric: 'checkOutLnPrics'
+      lnPric: 'checkOutLnPric'
     }),
     watch: {
       'lnPric': function (val) {

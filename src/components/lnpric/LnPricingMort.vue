@@ -193,7 +193,7 @@
         <mu-col width="30" tablet="40" desktop="40"></mu-col>
         <mu-col width="40" tablet="30" desktop="30">
           <!--<mu-raised-button label="上一步" :disabled="activeStep === 0" @click="handlePrev" />-->
-          <mu-raised-button label="下一步" :disabled="activeStep >=  3" @click="handleNext" backgroundColor="#009688" />
+          <mu-raised-button :disabled="clickNext" label="下一步"  @click="handleNext" primary />
         </mu-col>
         <mu-col width="10" tablet="30" desktop="30"></mu-col>
       </mu-row>
@@ -235,6 +235,7 @@
         guaranteOpen: false,
         bottomPopup: false,
         docked: true,
+        clickNext:false,
         activeStep: 2,
         leftTop: {
           horizontal: 'right',
@@ -291,15 +292,7 @@
     },
     methods: {
       goBack() {
-        if ('editlnpricmort' == this.$route.name) {
-          router.push({
-            name: 'editlnpricinfo',
-            params: {
-              custCode: this.$route.params.custCode,
-              businessCode: this.$route.params.businessCode
-            }
-          })
-        } else {
+
           router.push({
             name: 'lnpricinfo',
             params: {
@@ -307,7 +300,7 @@
               businessCode: this.$route.params.businessCode
             }
           })
-        }
+        
       },
       toggle(item) {
         switch (item.value) {
@@ -398,33 +391,24 @@
         this.activeStep--
       },
       handleNext() {
-  
+        this.clickNext = true
         var params = {}
   
         params.BusinessCode = this.$route.params.businessCode
+        params.CustCode = this.$route.params.custCode
         params.StockUsage = 0
   
         this.$store.dispatch('lnBasePricing', params)
 
-        
 
-        if ('editlnpricmort' == this.$route.name) {
-          router.push({
-            name: 'editlnlnpricrst',
-            params: {
-              custCode: this.$route.params.custCode,
-              businessCode: this.$route.params.businessCode
-            }
-          })
-        } else {
-        router.push({
-          name: 'lnpricrst',
-          params: {
-            custCode: this.$route.params.custCode,
-            businessCode: this.$route.params.businessCode
-          }
-        })
-        }
+        // router.push({
+        //   name: 'lnpricrst',
+        //   params: {
+        //     custCode: this.$route.params.custCode,
+        //     businessCode: this.$route.params.businessCode
+        //   }
+        // })
+        
 
       },
       openPop() {

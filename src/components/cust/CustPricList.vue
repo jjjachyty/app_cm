@@ -19,7 +19,6 @@
   </div>
   <div v-if="activeTab === 'tab2'">
                 <mu-text-field icon="search" @blur="serchDpPric" class="appbar-search-field" fullWidth hintText="请输入客户号/客户名字/订单号" v-model="serchDpPricValue"/>
-    <h2>存款</h2>
   </div>
 </div>
     </div>

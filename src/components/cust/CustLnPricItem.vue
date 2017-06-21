@@ -89,12 +89,11 @@ export default {
               router.push({name:"custbrief",params:{custid:custID}})
     },
     lnPricDetail(businessCode){
-  
        router.push({name:"lnpricdetail",params:{businessCode:businessCode}})
-   
-         
     },lnpricing(item){
      console.log('LnBusiness',item)
+      this.$store.state.editOrAdd="edit"
+
       this.$store.dispatch('setLnBusiness',item)
        
       router.push({name:"editlnpricinfo",params:{businessCode:item.BusinessCode,custCode:item.Cust.CustCode}})

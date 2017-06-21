@@ -263,6 +263,7 @@ export default {
         BaseRateType: "1",
         MainMortgageType: "4"
     }
+    this.$store.state.editOrAdd="add"
         router.push({name:'lnpricinfo',params:{custCode:this.cust.CustCode}})
     }
     

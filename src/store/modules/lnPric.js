@@ -103,6 +103,14 @@ const actions = {
         api.post(url, { params }, (data) => {
             commit(types.LN_BASE_PRICING_SUCCESS, { rootState, data })
 
+            router.push({
+                name: 'lnpricrst',
+                params: {
+                    custCode: params.CustCode,
+                    businessCode: params.BusinessCode
+                }
+            })
+
             console.log("LN_BASE_PRICING_SUCCESS", data)
         }, (data) => {
             console.log("LN_BASE_PRICING_FAILED", data)
