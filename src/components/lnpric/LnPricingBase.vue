@@ -335,9 +335,14 @@ export default {
         
 
        this.$store.dispatch('saveLnBusinessInfo',lnBusiness)
-
-
-              router.push({ name: 'lnpricmort', params: { custCode: this.$route.params.custCode, businessCode: this.$route.params.businessCode } })
+         var businessCode = ""
+          if("edit"==this.$store.state.editOrAdd){
+            businessCode= this.$route.params.businessCode
+          }else{
+            businessCode= this.lnBusiness.BusinessCode
+          }
+      
+              router.push({ name: 'lnpricmort', params: { custCode: this.$route.params.custCode, businessCode: businessCode} })
 
 
       //  if(this.lnBusinessStatus.code == 200){
@@ -407,17 +412,9 @@ export default {
   
   },mounted () {
 
-      //  this.rateTypeSlots: [
-      //   {
-      //     width: '100%',
-      //     textAlign: 'right',
-      //     values: Object.keys(rateType)
-      //   }, {
-      //     width: '100%',
-      //     textAlign: 'left',
-      //     values: ['固定利率','']
-      //   }
-      // ],
+      if("edit"==this.$store.state.editOrAdd){
+        
+      
       var rateTypeVar = String(this.$store.state.lnBusiness.RateType)
       var repriceFreqVar = String(this.$store.state.lnBusiness.RepriceFreq)
       var rpymTypeVar = String(this.$store.state.lnBusiness.RpymType)
@@ -447,12 +444,13 @@ export default {
         this.rpymTypeItem = rpymTypeVar.dict('rpymType')
         this.rpymTypeSubItem = rpymCapitalFreqVar.dict('rpymCapitalFreq')
        
+}else{
+                  this.$store.dispatch('getLnBusinessCode',this.$store.state.lnBusiness)
 
+      }
     console.log("mounted",this.$store.state.lnBusiness.BusinessCode)
-    if ("" == this.$store.state.lnBusiness.BusinessCode){
-          this.$store.dispatch('getLnBusinessCode',this.$store.state.lnBusiness)
-          }
-          this.$store.dispatch('getTree',{QueryType:"Product",ProductCode:"B"})
+
+         // this.$store.dispatch('getTree',{QueryType:"Product",ProductCode:"B"})
   }
   // ,watch :{
   //     'lnBusiness': function(){

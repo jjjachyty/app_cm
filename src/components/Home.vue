@@ -41,18 +41,18 @@ export default {
   data () {
     return {
       list: [{
-        image: '/static/images/slogin.png',
+        image: '/statics/images/slogin.png',
         title: '天健金管科技-外部产品定价产品',
         author: '',
         featured: true
       }, {
-        image: '/static/images/ln.png',
+        image: '/statics/images/ln.png',
         title: '贷款测算',
         href:'/lnpricsim',
         button:true,
       }
       , {
-        image: '/static/images/dp.png',
+        image: '/statics/images/dp.png',
         title: '存款测算(未开放)',
         href:'',
         button:false

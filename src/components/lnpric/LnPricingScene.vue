@@ -216,7 +216,7 @@
   
     <!--产品弹出框-->
     <div>
-      <mu-popup scrollable position="bottom" popupClass="demo-popup-bottom" :open="bottomPopup">
+      <mu-popup scrollable position="bottom" popupClass="scene-popup-bottom" :open="bottomPopup">
         <mu-appbar title="产品">
           <mu-flat-button slot="right" label="关闭" color="white" @click="closePop" />
         </mu-appbar>
@@ -513,7 +513,9 @@ export default {
   top: 50%;
   margin-top: -1px;
 }
-
+.scene-popup-bottom{
+  width:100%
+}
 .echarts {
   height: 50vh;
   margin-left: -16px;
