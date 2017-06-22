@@ -69,6 +69,10 @@ export const mutations = {
         state.message.msg = "设置担保人信息成功"
         state.message.code = "200"
         state.lnBusiness.Guarantes = data.lnGuarantes
+    },
+    [types.SET_MESSAGE_SUCCESS](state, message) {
+        console.log("设置消息", message)
+        state.message = message
 
     }
 

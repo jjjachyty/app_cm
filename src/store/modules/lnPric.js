@@ -150,26 +150,25 @@ const actions = {
 // mutations
 const mutations = {
     [types.GET_LN_BUSINESS_SUCCESS](state, { lnPrics, params }) {
-        console.log("state.lnPrics", state.lnPrics)
+        console.log("state.lnPrics--before--", state.lnPrics, "params", params)
         var lnPricVar = state.lnPrics //.length > 0 ? state.lnPrics : new Array()
         if (null != lnPrics && lnPrics.length > 0) {
             if (params.StartRowNumber > 0) {
                 lnPricVar.push.apply(lnPricVar, lnPrics)
-
-                params.CurrentPage++
-                    params.NextPage++
-                    params.StartRowNumber = (params.NextPage - 1) * pageSize
                 state.lnPrics = lnPricVar
-                state.params = params
             } else {
                 state.lnPrics = lnPrics
-                state.params = params
             }
-        } else {
-            state.lnPrics = ""
-            state.params = params
-        }
+            params.CurrentPage++
+                params.NextPage++
+                params.StartRowNumber = (params.NextPage - 1) * pageSize
 
+            state.params = params
+        } else {
+            //state.lnPrics = ""
+            //state.params = params
+        }
+        console.log("state.lnPrics---after--", state.lnPrics, "params", params)
 
     },
     [types.GET_LN_PRICS_SUCCESS](state, { lnPrics, params }) {

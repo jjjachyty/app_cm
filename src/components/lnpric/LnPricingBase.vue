@@ -137,7 +137,7 @@
 <div>
     <div>
        
-<mu-popup scrollable position="bottom" popupClass="demo-popup-bottom" :open="bottomPopup">
+<mu-popup scrollable position="bottom" popupClass="base-popup-bottom" :open="bottomPopup">
     <mu-appbar title="产品">
       <mu-flat-button slot="right" label="关闭" color="white" @click="closePop"/>
     </mu-appbar>
@@ -465,7 +465,7 @@ export default {
 </script>
 
 <style >
-.demo-popup-bottom {
+.base-popup-bottom {
 height: 200px;
 width: 100%;
 }

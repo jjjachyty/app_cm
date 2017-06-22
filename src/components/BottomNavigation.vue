@@ -8,6 +8,7 @@
       <mu-bottom-nav-item value="seting" title="我的" icon="settings"/>
     </mu-bottom-nav>
   </mu-paper>
+
     </div>
 </template>
 
@@ -15,7 +16,8 @@
 export default {
   data () {
     return {
-      bottomNav: ''
+      bottomNav: '',
+      toast: false
     //   ,
     //   bottomNavColor: 'home'
     }

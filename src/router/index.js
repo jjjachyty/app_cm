@@ -24,6 +24,9 @@ import LnPricingScene from 'components/lnpric/LnPricingScene';
 import LnPricingSim from 'components/lnpric/LnPricingSim';
 import DpPricingSim from 'components/dppric/DpPricingSim';
 
+import MyApprove from 'components/approve/MyApprove';
+
+
 Vue.use(VueRouter);
 
 const routes = [{
@@ -66,6 +69,12 @@ const routes = [{
     //     ]
     // }, 
     { path: '/lnpricsim', name: 'lnpricsim', component: LnPricingSim }, { path: '/dppricsim', name: 'dppricsim', component: DpPricingSim },
+
+    // 审批
+    { path: '/approves', name: 'myApprove', component: MyApprove },
+
+
+
     { path: '/test', name: 'test', component: Test },
 
 ];

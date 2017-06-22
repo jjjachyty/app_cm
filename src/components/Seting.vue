@@ -116,7 +116,7 @@ export default {
   , methods: {
     loginOut() {
 
-      sessionStorage.setItem('sid', "")
+      //sessionStorage.setItem('sid', "")
       router.push({ path: "/login" })
 
 

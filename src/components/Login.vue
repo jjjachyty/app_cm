@@ -30,6 +30,7 @@
       <div class="mu-footer">
         © 2017 Copyright <br> 重庆天健金管科技服务有限公司
       </div>
+          <mu-toast v-if="toast"  :message="message.msg" primary/>
     </div>
   </div>
 </template>
@@ -44,23 +45,41 @@
     },
     data() {
       return {
+        toast:false,
         // note: changing this line won't causes changes
         // with hot-reload because the reloaded component
         // preserves its current state and we are modifying
         // its initial state.
-        loginUser:{username:'rpm',password:'111111'}
+        loginUser:{username:'',password:''}
       }
+    },
+    computed:{
+      ...mapGetters({
+       message:'checkOutMessage'
+    })
+     
     },
     methods: {
           userLogin () {
+            //this.$store.state.message={}
            this.$store.dispatch('userLogin',this.loginUser)
                        router.push({ path: "/" })
             }
 
+    },watch:{
+      'message':function(val){
+        console.log('message',val,val.code)
+        if(val.code == "400"){
+          this.toast = true
+      if (this.toastTimer) clearTimeout(this.toastTimer)
+      this.toastTimer = setTimeout(() => { this.toast = false }, 2000)
+        }
+
+      }
     }
   }
 </script>
-<style>
+<style scoped>
   .demo-grid div[class*="col-"] {
     background: #fff;
     text-align: center;
@@ -87,5 +106,8 @@
   .logo {
     width: 100px;
     height: 80px
+  }
+  .mu-toast{
+    background-color: #009688;
   }
 </style>

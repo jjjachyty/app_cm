@@ -26,6 +26,8 @@
         <mu-menu-item v-if="item.Status != '0' && item.Status != '-1' " title="详情" @click="lnPricDetail(item.BusinessCode)"/>
         <mu-menu-item title="定价" @click="lnpricing(item)"/>
         <mu-menu-item title="删除" @click="open(item)"/>
+        <mu-menu-item v-if="item.Status == '2'" title="送审" @click="submitApprove(item)"/>
+
       </mu-icon-menu>
     </mu-list-item>
     
@@ -120,6 +122,16 @@ export default {
           this.toastMsg = message
           if (this.toastTimer) clearTimeout(this.toastTimer)
           this.toastTimer = setTimeout(() => { this.toast = false }, 2000)
+    },submitApprove(item){
+      var params ={
+        businessKey:item.BusinessCode,
+        businessCode:item.BusinessCode,
+        userId:this.$store.state.auth.user_id,
+        json:JSON.stringify({data:item})
+      }
+      console.log(params)
+      this.$store.dispatch('submitApprove',params)
+
     }
   },created () {
     this.initLnPricing()

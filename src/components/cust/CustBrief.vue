@@ -61,7 +61,7 @@
             信用等级
             </mu-flexbox-item>
             <mu-flexbox-item >
-           {{cust.CustCredit}}
+           {{cust.CustCredit =='Not'?'无评级': cust.CustCredit}}
             </mu-flexbox-item>
             </mu-flexbox>
       </div>

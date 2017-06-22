@@ -43,3 +43,6 @@ export const getMortTree = ({ commit }) => {
 export const setLnBusiness = ({ commit }, lnbusiness) => {
     commit(types.SET_LN_BASE_FORM_SUCCESS, { lnbusiness })
 }
+export const setMessage = ({ commit }, message) => {
+    commit(types.SET_MESSAGE_SUCCESS, { message })
+}

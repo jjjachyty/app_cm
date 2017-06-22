@@ -1,9 +1,11 @@
 import {
     rpmApiRoot,
-    pageSize
+    pageSize,
+    approveApiRoot
 } from '../config'
 import axios from 'axios'
 import Qs from 'qs'
+import jsonp from 'jsonp'
 
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 
@@ -33,6 +35,18 @@ export default {
             errorcb(resp.data)
                 // }, 16)
         })
+    },
+    getJsonp(url, opts, cb, errorcb) {
+        //headers.sid = sessionStorage.getItem('sid')
+        jsonp(approveApiRoot + url, opts, function(err, data) {
+            if (err) {
+                console.error("getJsonp -- err ---", err.message);
+                errorcb(err)
+            } else {
+                console.log("getJsonp -- success ---", data);
+                cb(data)
+            }
+        });
     },
     getPage(url, params, cb, errorcb) {
 
