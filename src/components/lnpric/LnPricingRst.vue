@@ -165,7 +165,7 @@
   
           </mu-flexbox-item>
           <mu-flexbox-item>
-            {{lnPric.TgtRaroc * 100 | bankRound(2)}} %
+            {{lnPric.TgtRate * 100 | bankRound(2)}} %
   
           </mu-flexbox-item>
   
@@ -219,7 +219,7 @@
           </mu-flexbox-item>
         </mu-flexbox>
   
-        <div class="gutter" v-show="intRateInput != 0">
+        <div class="gutter" v-show="this.intRateInput > 0 || this.intRateFloatInput > 0">
           <mu-raised-button label="反算" class="demo-raised-button " @click="calcul" primary fullWidth :disabled="calculState" />
           <mu-divider />
         </div>
@@ -459,23 +459,27 @@ export default {
 
     ...mapGetters({
       lnPric: 'checkOutLnPric',
-      //message:'checkOutMessage'
+      message:'checkOutMessage'
     }),
     intRateFloat: function (value) {
-      if (null == this.intRateInput) {
+      if (null == this.intRateInput || this.intRateInput == 0) {
         return 0
-      }
-      this.lnPricIntRate = this.intRateInput / 100
+      }else{
+              this.lnPricIntRate = this.intRateInput / 100
       this.intRateFloatInput = null
       return (this.intRateInput / 100 - this.lnPric.BaseRate) / this.lnPric.BaseRate * 100
+      }
+
     },
     intRate: function (value) {
-      if (null == this.intRateFloatInput) {
+      if (null == this.intRateFloatInput || 0 == this.intRateFloatInput) {
         return 0
-      }
-      this.intRateInput = null
+      }else{
+              this.intRateInput = null
       this.lnPricIntRate = (this.intRateFloatInput / 100 + 1) * this.lnPric.BaseRate
       return (this.intRateFloatInput / 100 + 1) * this.lnPric.BaseRate * 100
+      }
+
     },
 
     //  initRateFloat:function(value){
@@ -575,7 +579,10 @@ export default {
   watch: {
     'lnPric': function (val) {
       this.calculState = false
-      this.intRateInput = (val.IntRate * 100).round(2)
+      if(val.IntRate != 0){
+     this.intRateInput = (val.IntRate * 100).round(2)
+      }
+ 
       this.bar.baseOption.series[0].data = [(val.FtpRate * 100).round(2), (val.OcRate * 100).round(2), val.PdRate * 100, (val.LgdRate * 100).round(2), val.EcRate * 100, val.CapCostRate * 100, val.CapPftRate * 100, val.AddTax * 100, val.IncomeTax * 100] //val.FtpRate *100
     },
     // 'message':function(val){

@@ -7,7 +7,7 @@
      <div v-if="item.BusinessCode">
       <mu-list-item :title="item.BusinessCode" disabled >
       <span slot="describe">    
-                 <mu-icon v-if="item.Status == 1" :size="20" value="warning" color="orange"/> <!--计算完成未保存-->
+                 <mu-icon v-if="item.Status == 1" :size="20" value="save" color="orange"/> <!--计算完成未保存-->
          <mu-icon v-if="item.Status == 0" :size="20" value="check_circle" color="orange"/> <!--未完成利率反算-->
          <mu-icon v-if="item.Status == -1" :size="20" value="error" color="red"/> <!--未完成贷款计算-->
          <mu-icon v-if="item.Status == 2" :size="20" value="done" color="teal"/> <!--计算完成并保存-->
@@ -23,10 +23,10 @@
         <!--<span >{{item.Status  | dict('pricingStatus') }}</span>-->
       </span>
       <mu-icon-menu slot="right" icon="more_vert" tooltip="操作">
-        <mu-menu-item v-if="item.Status != '0' && item.Status != '-1' " title="详情" @click="lnPricDetail(item.BusinessCode)"/>
-        <mu-menu-item title="定价" @click="lnpricing(item)"/>
-        <mu-menu-item title="删除" @click="open(item)"/>
-        <mu-menu-item v-if="item.Status == '2'" title="送审" @click="submitApprove(item)"/>
+        <mu-menu-item v-if="item.Status != '0' && item.Status != '-1' && item.Status != '1' " title="详情" @click="lnPricDetail(item.BusinessCode)"/>
+        <mu-menu-item v-if="item.Status != '3' && item.Status != '4' && item.Status != '6' " title="定价" @click="lnpricing(item)"/>
+                <mu-menu-item v-if="item.Status == '2'" title="送审" @click="submitApprove(item)"/>
+        <mu-menu-item v-if="item.Status != '3' && item.Status != '4' && item.Status != '6' " title="删除" @click="open(item)"/>
 
       </mu-icon-menu>
     </mu-list-item>
@@ -115,19 +115,19 @@ export default {
         'CurrentPage':0,
         'CustCode':this.$route.params.custcode,
         'NextPage':1,
-        'OrderAttr':'CREATE_TIME'}
+        'OrderAttr':'UPDATE_TIME'}
     this.$store.dispatch('getLnBusiness',params)
     },openToast(message){
           this.toast=true
-          this.toastMsg = message
+          this.toastMsg = message.msg
           if (this.toastTimer) clearTimeout(this.toastTimer)
           this.toastTimer = setTimeout(() => { this.toast = false }, 2000)
     },submitApprove(item){
       var params ={
-        businessKey:item.BusinessCode,
+        //businessKey:item.BusinessCode,
         businessCode:item.BusinessCode,
-        userId:this.$store.state.auth.user_id,
-        json:JSON.stringify({data:item})
+        userId:sessionStorage.getItem('user_id')//,
+        //json:encodeURI(JSON.stringify({data:"item"}))
       }
       console.log(params)
       this.$store.dispatch('submitApprove',params)

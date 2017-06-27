@@ -13,7 +13,7 @@ const state = {
         CurrentPage: 0,
         CustCode: 0,
         NextPage: 0,
-        OrderAttr: 'CREATE_TIME'
+        OrderAttr: 'UPDATE_TIME'
     }
 }
 
@@ -31,11 +31,9 @@ const actions = {
         var headers = {}
         if (params != undefined) {
 
-            //     if (params.CustCode) {
-            //         url = url + '/CustCode/' + params.CustCode
-            //     } else if (params.BusinessCode) {
-            //         url = '/pricelist/businesscode/' + params.BusinessCode
-            //     }
+            if (params.BusinessCode) {
+                url = url + '/BusinessCode/' + params.BusinessCode
+            }
             if (params.StartRowNumber || params.StartRowNumber > 0) {
                 headers['Start-Row-Number'] = params.StartRowNumber
             }
@@ -165,8 +163,8 @@ const mutations = {
 
             state.params = params
         } else {
-            //state.lnPrics = ""
-            //state.params = params
+            state.lnPrics = lnPrics
+            state.params = params
         }
         console.log("state.lnPrics---after--", state.lnPrics, "params", params)
 

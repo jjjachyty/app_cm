@@ -2,50 +2,47 @@
   <div>
     <br>
     <div class="seting-conext">
-  
-      <mu-card>
-        <mu-card-header :title="auth.user_name" :subTitle="auth.user_phone">
-          <mu-avatar color="blueGrey50" backgroundColor="teal500" slot="leftAvatar" :size="20">{{auth.user_name}}</mu-avatar>
-        </mu-card-header>
-        <mu-card-media>
-          <mu-avatar color="blueGrey50" backgroundColor="teal500" slot="leftAvatar" :size="120">{{auth.user_name}}</mu-avatar>
-        </mu-card-media>
-        <mu-card-title :title="auth.org_unit_desc" :subTitle="auth.role_name" />
-  
-        <mu-card-text>
-  
-        </mu-card-text>
-  
-      </mu-card>
-  
+  <mu-row gutter>
+    <mu-col width="50" tablet="50" desktop="33">        <div class="mu-avatar" style="width: 120px; height: 120px; color: rgb(236, 239, 241); background-color: rgb(0, 150, 136);"><div class="mu-avatar-inner"><!----> <!----> {{auth.user_name}}</div></div>
+</mu-col>
+    <mu-col width="50" tablet="50" desktop="33">
       <br>
-  
+      <span class="seting-title">{{auth.org_unit_desc}}</span>
+      <br>
+      <span class="seting-title">{{auth.role_name}}</span>
+    </mu-col>
+  </mu-row>
+      <br>  
       <mu-flexbox>
         <mu-flexbox-item>
-          完成测算
+          <span class="seting-title">完成测算</span>
         </mu-flexbox-item>
         <mu-flexbox-item>
-          100 次
+          <span class="seting-val">100 次 </span> 
         </mu-flexbox-item>
       </mu-flexbox>
       <mu-divider />
       <br>
       <mu-flexbox>
         <mu-flexbox-item>
-          发放贷款
+          
+           <span class="seting-title">发放贷款</span>
         </mu-flexbox-item>
         <mu-flexbox-item>
-          20 笔
+                    <span class="seting-val">20 笔</span> 
+
         </mu-flexbox-item>
       </mu-flexbox>
       <mu-divider />
       <br>
       <mu-flexbox>
         <mu-flexbox-item>
-          发放金额
+          
+            <span class="seting-title">发放金额</span>
         </mu-flexbox-item>
         <mu-flexbox-item>
-          23204 万
+                    <span class="seting-val">23021 万</span> 
+
         </mu-flexbox-item>
       </mu-flexbox>
 
@@ -53,10 +50,12 @@
       <br>
       <mu-flexbox>
         <mu-flexbox-item>
-          派生追踪
+          
+          <span class="seting-title">派生追踪</span>
         </mu-flexbox-item>
         <mu-flexbox-item>
-          89%
+                    <span class="seting-val">75 %</span> 
+
         </mu-flexbox-item>
       </mu-flexbox>
 
@@ -64,20 +63,23 @@
       <br>
       <mu-flexbox>
         <mu-flexbox-item>
-          全行排名(233)
+          <span class="seting-title">全行排名</span>
         </mu-flexbox-item>
         <mu-flexbox-item>
-          10
+                    <span class="seting-val">第 10 名</span> 
+
         </mu-flexbox-item>
       </mu-flexbox>
       <mu-divider />
       <br>
       <mu-flexbox>
         <mu-flexbox-item>
-          本机构排名(10)
+          
+          <span class="seting-title">本机构排名</span>
         </mu-flexbox-item>
         <mu-flexbox-item>
-          2
+                    <span class="seting-val">第 2 名</span> 
+
         </mu-flexbox-item>
       </mu-flexbox>
       <mu-divider />
@@ -132,5 +134,22 @@ export default {
   padding: 16px;
   padding-bottom: 200px;
   /*padding-right: 16px;*/
+}
+.seting-val{
+  font-family: Monoton; 
+  font-size: 18px;
+      color: rgba(0,150,136,.5);
+    text-shadow: -1px 0 1px rgba(40,80,120,.8), 1px -1px 1px rgba(255,255,255,.8);
+}
+.mu-card-media {
+    /* position: relative; */
+    padding-left: 50%;
+}
+.seting-title {
+    font-size: 16px;
+
+    line-height: 36px;
+          color: rgba(96,125,139,1);
+    text-shadow: -1px 0 1px rgba(40,80,120,.8), 1px -1px 1px rgba(255,255,255,.8);
 }
 </style>

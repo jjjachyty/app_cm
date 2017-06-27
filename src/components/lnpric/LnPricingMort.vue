@@ -171,7 +171,7 @@
     </div>
   
     <div>
-      <mu-popup scrollable position="bottom" popupClass="demo-popup-bottom" :open="bottomPopup">
+      <mu-popup scrollable position="bottom" popupClass="mort-popup-bottom" :open="bottomPopup">
         <mu-appbar title="抵押品">
           <mu-flat-button slot="right" label="关闭" color="white" @click="closePop" />
         </mu-appbar>
@@ -538,13 +538,17 @@
   }
 </script>
 
-<style scoped>
+<style >
   .icon-button {
-    background-color:  teal;
+    color:  teal;
   }
   
   .mu-toast {
     background-color: #ef5350;
     color: #ffffff;
+  }
+  .mort-popup-bottom{
+height: 200px;
+width: 100%;
   }
 </style>

@@ -57,8 +57,8 @@ const mutations = {
     },
     [types.LOGOUT_SUCCESS](state, { rootState, auth }) {
         sessionStorage.setItem('sid', "")
-        sessionStorage.setItem('user_id', auth.data[0].user_id)
-        sessionStorage.setItem('user_name', auth.data[0].user_name)
+        sessionStorage.setItem('user_id', "")
+        sessionStorage.setItem('user_name', "")
         rootState.auth = ""
     },
     //登录失败

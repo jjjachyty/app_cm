@@ -6,28 +6,27 @@ import router from './router'
 import store from './store'
 import filter from './filter'
 import MuseUI from 'muse-ui'
+import vueFinger from 'vue-finger'
+import VueECharts from 'vue-echarts'
+import Tree from 'hsy-vue-tree'
 import 'muse-ui/dist/muse-ui.css'
 import 'muse-ui/dist/theme-teal.css' // 使用 teal 主题
-import vueFinger from 'vue-finger'
 
 Vue.use(MuseUI)
-import VueECharts from 'vue-echarts'
 Vue.component('chart', VueECharts)
-
-import Tree from 'hsy-vue-tree'
-
 Vue.use(Tree)
 Vue.use(vueFinger)
 
-import axios from 'axios'
-Vue.prototype.$http = axios
+
+
+
 
 router.beforeEach(({ meta, path }, from, next) => {
     //var { auth = true } = meta
     var isLogin = Boolean(sessionStorage.getItem('sid')) //true用户已登录， false用户未登录
-    console.log("登录验证SID",sessionStorage.getItem('sid'))
+    console.log("登录验证SID", sessionStorage.getItem('sid'))
 
-    if ( !isLogin && path !== '/login') {
+    if (!isLogin && path !== '/login') {
         return next({ path: '/login' })
     }
     if (isLogin && path == '/login') {

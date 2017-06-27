@@ -1,8 +1,8 @@
 <template>
   <div class="login">
     <div class="vux-demo">
-      <img class="logo" src="../assets/images/login.png">
-      <p style="color:#009688"><h7>客户经理版</h7></p>
+      <img class="logo" src="../assets/img/login.png">
+      <!--<p style="color:#009688"><h7>客户经理版</h7></p>-->
     </div>
     <div class="demo-grid">
       <mu-row gutter>

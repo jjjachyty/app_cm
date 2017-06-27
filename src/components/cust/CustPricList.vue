@@ -12,13 +12,13 @@
     <mu-tab value="tab2" title="存款"/>
   </mu-tabs>
   <div v-if="activeTab === 'tab1'">
-                <mu-text-field icon="search" @blur="serchLnPric" class="appbar-search-field" fullWidth hintText="请输入客户号/客户名字/订单号" v-model="serchLnPricValue"/>
+                <mu-text-field icon="search" @blur="serchLnPric" class="appbar-search-field" fullWidth hintText="请输入订单号" v-model="serchLnPricValue"/>
 
    <CustLnPricItem></CustLnPricItem>
 
   </div>
   <div v-if="activeTab === 'tab2'">
-                <mu-text-field icon="search" @blur="serchDpPric" class="appbar-search-field" fullWidth hintText="请输入客户号/客户名字/订单号" v-model="serchDpPricValue"/>
+                <mu-text-field icon="search" @blur="serchDpPric" class="appbar-search-field" fullWidth hintText="请输入订单号" v-model="serchDpPricValue"/>
   </div>
 </div>
     </div>
@@ -43,7 +43,7 @@ export default {
       this.activeTab = val
     },
     handleActive () {
-      window.alert('tab active')
+      
     },
     back(){
       var custCode = this.$route.params.custCode
@@ -51,7 +51,13 @@ export default {
 
     },
     serchLnPric(){
-
+      var params = {'StartRowNumber':0, 
+        'CurrentPage':0,
+        'CustCode':this.$route.params.custcode,
+        'NextPage':1,
+        'BusinessCode':this.serchLnPricValue,
+        'OrderAttr':'UPDATE_TIME'}
+    this.$store.dispatch('getLnBusiness',params)
     },
 
     serchDpPric(){

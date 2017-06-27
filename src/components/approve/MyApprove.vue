@@ -106,6 +106,7 @@ export default {
 
 .demo-popup-bottom {
   height: 500px;
+  width: 100%
 }
 
 .snapshot {

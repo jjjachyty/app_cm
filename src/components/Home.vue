@@ -4,7 +4,7 @@
 <div class="gridlist-demo-container">
   <mu-grid-list class="gridlist-demo">
     <mu-grid-tile v-for="tile,index in list" :key="'tile' + index" titlePosition="bottom"  :rows="tile.featured ? 2 : 1" :cols="tile.featured ? 2 : 1">
-     <img :src="tile.image"/>
+     <img class="home-img" :src="tile.image"/>
       <span slot="title">{{tile.title}}</span>
       <mu-icon-button v-if="tile.button"icon="fingerprint" slot="action" :href="tile.href"/>
     </mu-grid-tile>
@@ -41,18 +41,18 @@ export default {
   data () {
     return {
       list: [{
-        image: '/statics/images/slogin.png',
+        image: 'static/images/slogin.png',
         title: '天健金管科技-外部产品定价产品',
         author: '',
         featured: true
       }, {
-        image: '/statics/images/ln.png',
+        image: 'static/images/ln.png',
         title: '贷款测算',
-        href:'/lnpricsim',
+        href:'#/lnpricsim',
         button:true,
       }
       , {
-        image: '/statics/images/dp.png',
+        image: 'static/images/dp.png',
         title: '存款测算(未开放)',
         href:'',
         button:false
@@ -89,5 +89,8 @@ export default {
 }
 .tz{
   margin-right: 650px;
+}
+.home-img{
+  width:100%
 }
 </style>

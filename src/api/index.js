@@ -50,7 +50,7 @@ export default {
     },
     getPage(url, params, cb, errorcb) {
 
-        var headers = { 'Sid': sessionStorage.getItem('sid'), 'Page-Size': pageSize, 'Start-Row-Number': 0, 'Order-Attr': 'CreateTime' }
+        var headers = { 'Sid': sessionStorage.getItem('sid'), 'Page-Size': pageSize, 'Start-Row-Number': 0, 'Order-Attr': 'UpdateTime', 'Order-Type': 'DESC' }
         if (params.StartRowNumber > 0) {
             headers['Start-Row-Number'] = params.StartRowNumber
         }

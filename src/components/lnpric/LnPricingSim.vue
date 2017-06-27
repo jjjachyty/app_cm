@@ -2,7 +2,7 @@
 <div>
     <div>
       <mu-appbar title="贷款测算" v-show="showTabBar">
-        <mu-icon-button icon='keyboard_backspace' slot="left" touch href="/" />
+        <mu-icon-button icon='keyboard_backspace' slot="left" touch href="#/" />
       </mu-appbar>
     </div>
 <div >
