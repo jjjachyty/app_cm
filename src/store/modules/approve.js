@@ -12,14 +12,16 @@ import {
 const state = {
     approves: [],
     approvesCount: "",
-    snapShot: ""
+    snapShot: "",
+    tasks: []
 }
 
 // getters
 const getters = {
     checkOutApproves: state => state.approves,
     checkOutApprovesCount: state => state.approvesCount,
-    checkOutSnapShot: state => state.snapShot
+    checkOutSnapShot: state => state.snapShot,
+    checkOutTasks: state => state.tasks
 }
 
 // actions
@@ -34,8 +36,8 @@ const actions = {
     },
     getApprovesSanpShot({ commit }, params) {
         var url = "/api/info?userId=" + params.userId + "&taskId=" + params.taskId
-        api.getJsonp(url, null, (url) => {
-            commit(types.GET_APPROVE_SNAPSHOT_SUCCESS, { url })
+        api.getJsonp(url, null, (data) => {
+            commit(types.GET_APPROVE_SNAPSHOT_SUCCESS, { data })
         }, () => {
             commit(types.GET_APPROVE_SNAPSHOT_FAILED)
         })
@@ -78,8 +80,8 @@ const actions = {
     },
     allowApprove({ dispatch, commit }, params) {
         var url = "/api/handle?userId=" + params.userId + "&taskId=" + params.taskId + "&comment=" + params.comment
-        api.getJsonp(url, null, (url) => {
-            commit(types.ALLOW_APPROVE_SUCCESS, { url })
+        api.getJsonp(url, null, (data) => {
+            commit(types.ALLOW_APPROVE_SUCCESS, { data })
             dispatch('getMyApproves', { userId: params.userId })
         }, () => {
             commit(types.ALLOW_APPROVE_FAILED)
@@ -106,8 +108,10 @@ const mutations = {
     [types.GET_APPROVE_LIST_FAILED](state, data) {
 
     },
-    [types.GET_APPROVE_SNAPSHOT_SUCCESS](state, { url }) {
-        state.snapShot = approveApiRoot + "/" + url
+    [types.GET_APPROVE_SNAPSHOT_SUCCESS](state, { data }) {
+        console.log(data)
+        state.snapShot = approveApiRoot + "/" + data.content
+        state.tasks = data.tasks
     },
     [types.GET_APPROVE_SNAPSHOT_FAILED](state, data) {
 

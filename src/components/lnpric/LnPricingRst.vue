@@ -135,7 +135,7 @@
     </mu-list-item>
   
     <mu-divider />
-    <mu-list-item title="优惠结果" toggleNested>
+    <mu-list-item title="测算结果" toggleNested>
       <mu-list-item slot="nested" disabled>
         <mu-flexbox>
           <mu-flexbox-item>

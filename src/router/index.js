@@ -10,6 +10,7 @@ import Seting from 'components/Seting';
 import Test from 'components/Test';
 
 import CustBrief from 'components/cust/CustBrief';
+import CustAdd from 'components/cust/CustAdd';
 import CustPricList from 'components/cust/CustPricList';
 import LnPricSht from 'components/lnpric/LnPricSht';
 
@@ -47,6 +48,7 @@ const routes = [{
     },
     { path: '/login', name: 'login', component: Login },
     { path: '/cust/brief/:custCode', name: 'custbrief', component: CustBrief },
+    { path: '/addcust', name: 'addcust', component: CustAdd },
     { path: '/cust/priclist/:custCode', name: 'custpriclist', component: CustPricList },
     { path: '/cust/lnpricdetail/:businessCode', name: 'lnpricdetail', component: LnPricSht },
 

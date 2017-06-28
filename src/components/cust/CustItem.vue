@@ -6,8 +6,9 @@
     <template v-for="item in lncusts">
      
               <mu-list-item :title="item.CustName" @click="custBrief(item.CustCode)">
-      <mu-avatar  color="blueGrey50" backgroundColor="teal500" slot="leftAvatar">{{item.CustName | avatar}}</mu-avatar>
- 
+      <mu-avatar v-if="item.Status == '01'"  backgroundColor="orange900"  slot="leftAvatar">{{item.CustName | avatar}}</mu-avatar>
+      <mu-avatar v-if="item.Status == '02'"  backgroundColor="teal500" slot="leftAvatar">{{item.CustName | avatar}}</mu-avatar>
+
       <span>{{item.CustCode}}</span>
       <!--<span slot="describe">
         <span style="color: rgba(0, 0, 0, .87)">

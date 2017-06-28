@@ -22,11 +22,31 @@
         <mu-flat-button slot="right" label="关闭" color="white" @click="close()" />
       </mu-appbar>
       <mu-content-block class="snapshot">
+        <div v-for="task in tasks">
+  
+          <mu-row class="context" v-if="task.name">
+            <mu-col width="10" tablet="30" desktop="30">
+              <mu-icon value="perm_contact_calendar" color="teal" />
+            </mu-col>
+            <mu-col width="40" tablet="60" desktop="60">
+              <mu-sub-header> {{task.name}}</mu-sub-header>
+            </mu-col>
+            <mu-col width="10" tablet="30" desktop="30">
+              <mu-icon value="assignment" color="teal" />
+            </mu-col>
+            <mu-col width="40" tablet="60" desktop="60">
+              <mu-sub-header> {{task.comment}}</mu-sub-header>
+            </mu-col>
+          </mu-row>
+          <mu-divider />
+  
+        </div>
         <img :src="snapshot" class="img">
+  
       </mu-content-block>
     </mu-popup>
   
-    <mu-dialog :open="dialog" title="意见">
+    <mu-dialog :open="dialog" title="意见" @close="close">
       <mu-text-field hintText="请输入审批意见" v-model="comment" multiLine :rows="3" :rowsMax="6" />
       <br/>
   
@@ -51,7 +71,7 @@ export default {
       dialog: false,
       approveType: "",
       taskId: "",
-      comment:""
+      comment: ""
     }
   }, methods: {
     back() {
@@ -62,10 +82,10 @@ export default {
       this.dialog = true
     },
     allow() {
-      var params = { userId: this.$store.state.auth.user_id, taskId: this.taskId ,comment:this.comment}
+      var params = { userId: this.$store.state.auth.user_id, taskId: this.taskId, comment: this.comment }
       this.$store.dispatch("allowApprove", params)
     }, rejected() {
-      var params = { userId: this.$store.state.auth.user_id, taskId: this.taskId ,comment:this.comment}
+      var params = { userId: this.$store.state.auth.user_id, taskId: this.taskId, comment: this.comment }
       this.$store.dispatch("rejectApprove", params)
     }, showDetail(id) {
       this.bottomPopup = true
@@ -73,10 +93,10 @@ export default {
       this.$store.dispatch("getApprovesSanpShot", params)
     }, close() {
       this.bottomPopup = false
-     
+      this.dialog = false
 
     }, closeDialog() {
- this.dialog = false
+      this.dialog = false
       switch (this.approveType) {
         case 'allow':
           this.allow()
@@ -89,7 +109,8 @@ export default {
   }, computed: {
     ...mapGetters({
       approves: 'checkOutApproves',
-      snapshot: 'checkOutSnapShot'
+      snapshot: 'checkOutSnapShot',
+      tasks: 'checkOutTasks'
     })
   }, created() {
     //var userId = this.$store.state.auth.user_id

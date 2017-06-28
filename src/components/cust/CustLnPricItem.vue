@@ -13,7 +13,7 @@
          <mu-icon v-if="item.Status == 2" :size="20" value="done" color="teal"/> <!--计算完成并保存-->
           <mu-icon v-if="item.Status == 3" :size="20" value="history" color="teal"/> <!--	审批中-->
            <mu-icon v-if="item.Status == 4" :size="20" value="gavel" color="teal"/> <!--通过审批-->
-            <mu-icon v-if="item.Status == 5" :size="20" value="pan_tool" color="teal"/> <!--驳回审批-->
+            <mu-icon v-if="item.Status == 5" :size="20" value="pan_tool" color="orange"/> <!--驳回审批-->
              <mu-icon v-if="item.Status == 6" :size="20" value="check_box" color="teal"/> <!--已放款-->        
         <span>{{item.Term}} {{item.TermMult | dict('termMult')}}/</span>
         <span>{{item.Product.ProductName}}/</span>
@@ -98,7 +98,7 @@ export default {
 
       this.$store.dispatch('setLnBusiness',item)
        
-      router.push({name:"editlnpricinfo",params:{businessCode:item.BusinessCode,custCode:item.Cust.CustCode}})
+      router.push({name:"lnpricinfo",params:{businessCode:item.BusinessCode,custCode:item.Cust.CustCode}})
 
     },open(item){
       this.dialog = true

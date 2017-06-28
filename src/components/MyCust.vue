@@ -3,6 +3,8 @@
       <div>
         <mu-appbar title="我的客户">
         <!--<mu-icon-button icon='expand_more' slot="right"/>-->
+              <mu-icon-button slot="right" touch @click="addCust">+</mu-icon-button>
+
         </mu-appbar>
       </div>
       <div >
@@ -32,6 +34,8 @@ CustItem
         var parms = {'CustName':this.serchValue,'CustCode':this.serchValue,'CurrentPage':1, 'NextPage':2,'StartRowNumber': 0,'OrderAttr':'CREATE_TIME'}
            this.$store.dispatch('getMyLnCusts',parms)
 
+    },addCust(){
+        router.push({name:'addcust'})
     }
   }
 }
