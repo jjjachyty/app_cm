@@ -43,6 +43,46 @@ const actions = {
         }, () => {
             commit(types.GET_LN_CUST_FAILED)
         })
+    },
+    saveLnCust({ commit }, params) {
+        var url = "/cust"
+        console.log("saveLnCust", url)
+        api.save(url, { params }, (cust) => {
+            console.log("cust", cust)
+            commit(types.SAVE_LN_CUST_SUCCESS, { cust })
+            router.push({ name: 'custs' })
+        }, (data) => {
+            commit(types.SAVE_LN_CUST_FAILED, { data })
+        })
+    },
+    updateLnCust({ commit }, params) {
+        var url = "/cust"
+        console.log("saveLnCust", url)
+        api.update(url, { params }, (cust) => {
+            console.log("cust", cust)
+            commit(types.SAVE_LN_CUST_SUCCESS, { cust })
+            router.push({ name: 'custs' })
+        }, (data) => {
+            commit(types.SAVE_LN_CUST_FAILED, { data })
+        })
+    },
+    delLnCust({ dispatch, commit }, params) {
+        var url = "/cust"
+        console.log("saveLnCust", url)
+        api.delete(url, { params }, (cust) => {
+            console.log("cust", cust)
+            var params = {
+                'StartRowNumber': 0,
+                'CurrentPage': 0,
+                'NextPage': 1,
+                'OrderAttr': 'CREATE_TIME'
+            }
+            dispatch('getMyLnCusts', params)
+            commit(types.SAVE_LN_CUST_SUCCESS, { cust })
+        }, (data) => {
+            dispatch('setMessage', { code: '300', msg: data.RstMsg })
+            commit(types.SAVE_LN_CUST_FAILED, { data })
+        })
     }
 }
 
@@ -67,6 +107,12 @@ const mutations = {
     },
     [types.GET_LN_CUST_SUCCESS](state, { cust }) {
         state.lnCust = cust
+    },
+    [types.SAVE_LN_CUST_SUCCESS](state, { data }) {
+
+    },
+    [types.SAVE_LN_CUST_FAILED](state, { data }) {
+
     },
     [types.GET_LN_CUST_FAILED](cust) {
         state.lnCust = ""

@@ -4,6 +4,7 @@ import * as types from './mutation-types'
 export const state = {
     tree: [],
     editOrAdd: "add",
+    editCust: {},
     lnBusiness: {
         BusinessCode: "",
         Product: {

@@ -5,29 +5,29 @@
   <mu-list>
     <template v-for="item in lncusts">
      
-              <mu-list-item :title="item.CustName" @click="custBrief(item.CustCode)">
+       
+      <mu-list-item >
       <mu-avatar v-if="item.Status == '01'"  backgroundColor="orange900"  slot="leftAvatar">{{item.CustName | avatar}}</mu-avatar>
       <mu-avatar v-if="item.Status == '02'"  backgroundColor="teal500" slot="leftAvatar">{{item.CustName | avatar}}</mu-avatar>
+      <div @click="custBrief(item)">
+      <span >{{item.CustName}}</span><br>
+      <span >{{item.CustCode}}</span>
+      </div>
+        <mu-icon-menu v-if="item.Status == '01'" slot="right" icon="more_vert" tooltip="操作">
+        <mu-menu-item  title="编辑" @click="editCust(item)"/>
+        <mu-menu-item  title="删除" @click="delCust(item)"/>
 
-      <span>{{item.CustCode}}</span>
-      <!--<span slot="describe">
-        <span style="color: rgba(0, 0, 0, .87)">
-            </span>  {{item}}  <br>
-        信用评级:AAA<br> 
-        机构:人民路支行<br>行业:'零售业'<br>规模:'大型'
-      </span>
-      </span>-->
-      <!--<mu-icon-menu slot="right" icon="more_vert" tooltip="操作">
-        <mu-menu-item title="回复" />
-        <mu-menu-item title="标记" />
-        <mu-menu-item title="删除" />
-      </mu-icon-menu>-->
+      </mu-icon-menu>
     </mu-list-item>
-       
+
+
       <mu-divider/>
     </template>
   </mu-list>
   <mu-infinite-scroll :scroller="scroller" :loading="loading" @load="loadMore"/>
+
+    <mu-toast v-if="toast" :message="message.msg" @close="hideToast" />
+
 </div>
 </template>
 
@@ -46,14 +46,17 @@ export default {
     return {
       num: 15,
       loading: false,
-      scroller: null
+      scroller: null,
+      open:false,
+      toast:false
     }
   },
   mounted () {
     this.scroller = this.$el
   },
     computed: mapGetters({
-    lncusts: 'checkOutLnCusts'
+    lncusts: 'checkOutLnCusts',
+    message:'checkOutMessage'
   }),
   methods: {
     loadMore () {
@@ -70,17 +73,35 @@ export default {
      this.loading = false
        }, 200)
     },
-    custBrief(custCode){
-              this.$store.dispatch('getLnCust',{'CustCode':custCode})
-              router.push({name:"custbrief",params:{custCode:custCode}})
-    },
+    custBrief(item){
+     
+             this.$store.dispatch('getLnCust',{'CustCode':item.CustCode})
+             router.push({name:"custbrief",params:{custCode:item.CustCode}})
+    },editCust(item){
+      console.log("item",item)
+      this.$store.state.editCust=item
+      this.$store.state.editOrAdd="edit"
+        router.push({name:'addcust'})
+    },delCust(item){
+       this.$store.dispatch('delLnCust',item)
+    }
     
-  },created () {
+  },mounted(){
+    
+  }
+  ,created () {
     var params = {'StartRowNumber':0, 
         'CurrentPage':0,
         'NextPage':1,
         'OrderAttr':'CREATE_TIME'}
     this.$store.dispatch('getMyLnCusts',params)
+  },watch:{
+        'message':function(val){
+       this.toast= true
+       if (this.toastTimer) clearTimeout(this.toastTimer)
+          this.toastTimer = setTimeout(() => { this.toast = false }, 2000)
+
+    }
   }
 }
 </script>

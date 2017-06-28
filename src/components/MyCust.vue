@@ -35,6 +35,7 @@ CustItem
            this.$store.dispatch('getMyLnCusts',parms)
 
     },addCust(){
+      this.$store.state.editOrAdd="add"
         router.push({name:'addcust'})
     }
   }

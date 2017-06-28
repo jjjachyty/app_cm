@@ -13,6 +13,10 @@ export const getTree = ({ commit }, params) => {
             console.log("Mort", "Mort")
             url = "/tree/mortgage?topCode=" + params.MortCode
             break
+        case 'Industry':
+            console.log("tree", "industry")
+            url = "/tree/industry"
+            break
     }
     api.get(url, {}, (tree) => {
         console.log("tree", tree)
