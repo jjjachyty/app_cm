@@ -142,7 +142,7 @@
       <mu-flat-button slot="right" label="关闭" color="white" @click="closePop"/>
     </mu-appbar>
     <mu-content-block>
-    <mu-menu desktop autoWidth scrollable >
+    <mu-menu :maxHeight="400" >
     <div v-for="lnProduct in lnProducts">
     
       <mu-menu-item :title="lnProduct.name" v-if="lnProduct.isParent == 1" value="lnProduct.id" @click="choiseProduct(lnProduct)" rightIcon="keyboard_arrow_right"/>
@@ -464,7 +464,7 @@ export default {
 
 <style >
 .base-popup-bottom {
-height: 200px;
+height: 400px;
 width: 100%;
 }
 .context{

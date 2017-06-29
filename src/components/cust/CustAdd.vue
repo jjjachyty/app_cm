@@ -51,7 +51,7 @@
                 </mu-sub-header>
             </mu-col>
             <mu-col width="60" tablet="60" desktop="60">
-                <mu-select-field v-model="cust.CustCredit" fullWidth>
+                <mu-select-field v-model="cust.CustCredit" fullWidth :maxHeight="300">
                     <mu-menu-item value="AAA+" title="AAA+" />
                     <mu-menu-item value="AAA" title="AAA" />
                     <mu-menu-item value="AAA-" title="AAA-" />
@@ -149,10 +149,9 @@
       <mu-appbar title="详情">
         <mu-flat-button slot="right" label="关闭" color="white" @click="closePop()" />
       </mu-appbar>
-      <mu-content-block class="scor-h">
-    <div v-for="industry in industrys">
+
     <mu-content-block>
-    <mu-menu>
+    <mu-menu :maxHeight="500">
     <div v-for="industry in industrys">
 
       <mu-menu-item :title="industry.name" v-if="industry.isParent == 1"  @click="choiseProduct(lnProduct)" rightIcon="keyboard_arrow_right"/>
@@ -162,9 +161,8 @@
     </mu-menu>
     </mu-content-block>
 
-        </div>
+
   
-      </mu-content-block>
     </mu-popup>
 
 
@@ -238,7 +236,9 @@ export default {
         if (this.$store.state.editOrAdd == "edit") {
             this.cust = this.$store.state.editCust
         } else {
-            this.cust.CustCode = 'CUST' + (new Date().getTime().toString())
+            this.cust.CustCode = 'CUSTAPP' + (new Date().getTime().toString())
+            this.cust.Branch.OrganName=this.$store.state.auth.org_unit_desc
+            this.cust.Branch.OrganCode=this.$store.state.auth.org_unit_id
 
         }
 

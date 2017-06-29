@@ -13,7 +13,7 @@
       <span >{{item.CustName}}</span><br>
       <span >{{item.CustCode}}</span>
       </div>
-        <mu-icon-menu v-if="item.Status == '01'" slot="right" icon="more_vert" tooltip="操作">
+        <mu-icon-menu v-if="item.Status != '02'" slot="right" icon="more_vert" tooltip="操作">
         <mu-menu-item  title="编辑" @click="editCust(item)"/>
         <mu-menu-item  title="删除" @click="delCust(item)"/>
 
