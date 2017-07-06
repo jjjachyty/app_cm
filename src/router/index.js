@@ -28,6 +28,11 @@ import DpPricingSim from 'components/dppric/DpPricingSim';
 import MyApprove from 'components/approve/MyApprove';
 
 
+import DpPricing from 'components/dppric/DpPricing';
+
+
+
+
 Vue.use(VueRouter);
 
 const routes = [{
@@ -76,8 +81,11 @@ const routes = [{
     { path: '/approves', name: 'myApprove', component: MyApprove },
 
 
-
     { path: '/test', name: 'test', component: Test },
+
+    //存款
+    { path: '/dpricinfo/custcode/:custCode', name: 'dppricinfo', component: DpPricing },
+
 
 ];
 

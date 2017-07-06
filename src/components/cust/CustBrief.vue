@@ -85,7 +85,7 @@
         <mu-raised-button label="贷款定价" class="demo-raised-button" @click="lnpric" primary fullWidth/>
         <br>
          <br>
-        <mu-raised-button label="存款定价" class="demo-raised-button" @click="" backgroundColor="teal200" fullWidth/>
+        <mu-raised-button label="存款定价" class="demo-raised-button" @click="dppric" backgroundColor="teal200" fullWidth/>
       </div>
         
       </div>
@@ -265,6 +265,12 @@ export default {
     }
     this.$store.state.editOrAdd="add"
         router.push({name:'lnpricinfo',params:{custCode:this.cust.CustCode}})
+    },dppric(){
+
+    this.$store.state.editOrAdd="add"
+            this.$store.dispatch('startDP',this.cust)
+
+        router.push({name:'dppricinfo',params:{custCode:this.cust.CustCode}})
     }
     
   },created(){

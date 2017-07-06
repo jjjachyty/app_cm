@@ -12,6 +12,9 @@ import lnPricGuaranteModule from './modules/lnPricGua';
 import lnPricSceneDPModule from './modules/lnPricSceDP';
 import lnPricSceneIBModule from './modules/lnPricSceIB';
 import approveModule from './modules/approve';
+import dpPricModule from './modules/dpPric';
+
+
 
 import * as actions from './actions'
 import * as getters from './getters'
@@ -35,7 +38,8 @@ export default new Vuex.Store({
         lnPricGuaranteModule,
         lnPricSceneDPModule,
         lnPricSceneIBModule,
-        approveModule
+        approveModule,
+        dpPricModule
 
     } //,
     // strict: debug,

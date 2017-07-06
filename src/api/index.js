@@ -32,7 +32,8 @@ export default {
             }
         }).catch((resp) => {
             //setTimeout(() => {
-            errorcb(resp.data)
+            sessionStorage.setItem("sid", "")
+            router.push({ name: 'login' })
                 // }, 16)
         })
     },

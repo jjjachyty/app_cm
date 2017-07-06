@@ -28,6 +28,7 @@ let mortgageType = {
 }
 
 
+
 Vue.filter('avatar', function(input) {
     return input.substr(2, 2)
 })

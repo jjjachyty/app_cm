@@ -178,11 +178,11 @@
     <!--中间业务弹出框 -->
     <div>
       <mu-drawer right :open="sceneIbOpen" :docked="false" @close="sceneIbToggle('drawerclose')">
-        <mu-appbar title="抵押品" />
+        <mu-appbar title="中间业务" />
         <mu-row class="context">
           <mu-col width="30" tablet="30" desktop="30">
             <mu-sub-header>
-              <strong>抵押品</strong>
+              <strong>中间业务</strong>
             </mu-sub-header>
           </mu-col>
           <input type="hidden" v-model="sceneIb.UUID" />
