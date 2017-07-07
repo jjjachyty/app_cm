@@ -84,7 +84,7 @@ const routes = [{
     { path: '/test', name: 'test', component: Test },
 
     //存款
-    { path: '/dpricinfo/custcode/:custCode', name: 'dppricinfo', component: DpPricing },
+    { path: '/dpricinfo/custcode/:custCode/businesscode/:businessCode', name: 'dppricinfo', component: DpPricing },
 
 
 ];

@@ -270,7 +270,7 @@ export default {
     this.$store.state.editOrAdd="add"
             this.$store.dispatch('startDP',this.cust)
 
-        router.push({name:'dppricinfo',params:{custCode:this.cust.CustCode}})
+        
     }
     
   },created(){

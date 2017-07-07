@@ -5,16 +5,20 @@ import { pageSize } from '../../config'
 
 const state = {
     dps: [],
+    dpibs: [],
     businessCode: "",
     dp: {},
-    dpPric: {}
+    dpPric: {},
+    custStocks: []
 }
 
 // getters
 const getters = {
     checkOutDPs: state => state.dps,
+    checkOutDPIBs: state => state.dpibs,
     checkOutDP: state => state.dp,
-    checkOutDPPric: state => state.dpPric
+    checkOutDPPric: state => state.dpPric,
+    checkOutDPCustStocks: state => state.custStocks
 }
 
 // actions
@@ -28,6 +32,7 @@ const actions = {
             commit(types.GET_LN_PRIC_SCENE_DP_FAILED, { data })
         })
     },
+
     addDP({ dispatch, commit }, params) {
         var url = "/dp/one/business"
         api.save(url, { params }, (dp) => {
@@ -43,6 +48,8 @@ const actions = {
         api.save(url, { params }, (dp) => {
             console.log("----startDP-----", dp)
             commit(types.START_DP_PRIC_SUCCESS, { dp })
+            router.push({ name: 'dppricinfo', params: { custCode: params.CustCode, businessCode: dp.BusinessCode } })
+
         }, (data) => {
             commit(types.ADD_LN_PRIC_SCENE_DP_FAILED, { data })
         })
@@ -50,11 +57,8 @@ const actions = {
     updateDP({ dispatch, commit }, params) {
         var url = "/dp/one/business"
         api.update(url, { params }, (lnSceneDP) => {
-            commit(types.ADD_LN_PRIC_SCENE_DP_SUCCESS, { lnSceneDP })
-            dispatch('getLnSceneDPs', { BusinessCode: params.BusinessCode })
-        }, (data) => {
-            commit(types.ADD_LN_PRIC_SCENE_DP_FAILED, { data })
-        })
+            dispatch('getDPs', { BusinessCode: params.BusinessCode })
+        }, (data) => {})
     },
 
     delDP({ dispatch, commit }, params) {
@@ -64,7 +68,48 @@ const actions = {
         }, (data) => {
             commit(types.DEL_DP_DPS_FAILED, { data })
         })
-    }
+    },
+    getDPIBs({ commit }, params) {
+        var url = "/dp/one/ib/BusinessCode/" + params.BusinessCode
+        api.get(url, {}, (dpibs) => {
+            commit(types.GET_DP_IBS_SUCCESS, { dpibs })
+
+        }, (data) => {
+            commit(types.GET_LN_PRIC_SCENE_DP_FAILED, { data })
+        })
+    },
+    addDPIB({ dispatch, commit }, params) {
+        var url = "/dp/one/ib"
+        api.save(url, { params }, (dp) => {
+            commit(types.ADD_LN_PRIC_SCENE_DP_SUCCESS, { dp })
+            dispatch('getDPIBs', { BusinessCode: params.BusinessCode })
+
+        }, (data) => {
+            commit(types.ADD_LN_PRIC_SCENE_DP_FAILED, { data })
+        })
+    },
+    updateDPIB({ dispatch, commit }, params) {
+        var url = "/dp/one/ib"
+        api.update(url, { params }, (lnSceneDP) => {
+            dispatch('getDPIBs', { BusinessCode: params.BusinessCode })
+        }, (data) => {})
+    },
+    delDPIB({ dispatch, commit }, params) {
+        var url = "/dp/one/ib"
+        api.delete(url, { params }, (dp, params) => {
+            dispatch('getDPIBs', { BusinessCode: params.BusinessCode })
+        }, (data) => {
+            commit(types.DEL_DP_DPS_FAILED, { data })
+        })
+    },
+    getCustStock({ commit }, params) {
+        var url = "/dp/one/stock/business/Cust/" + params.CustCode
+        api.get(url, {}, (custstock) => {
+            commit(types.GET_DP_CUST_STOCK_SUCCESS, { custstock })
+        }, (data) => {
+
+        })
+    },
 
 }
 
@@ -76,8 +121,11 @@ const mutations = {
     [types.GET_DP_DPS_SUCCESS](state, { dps }) {
         state.dps = dps
     },
-    [types.GET_LN_PRIC_SCENE_DP_FAILED](state, data) {
-        state.dps = ""
+    [types.GET_DP_IBS_SUCCESS](state, { dpibs }) {
+        state.dpibs = dpibs
+    },
+    [types.GET_DP_CUST_STOCK_SUCCESS](state, { custstock }) {
+        state.custStocks = custstock
     },
     [types.ADD_LN_PRIC_SCENE_DP_SUCCESS](state, { dp }) {
         state.dp = dp

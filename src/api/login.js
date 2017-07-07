@@ -45,17 +45,18 @@ export default {
 
 
         }).catch((response) => {
-            console.log("登录响应失败", response.data)
+            console.log("登录响应失败", response)
                 //错误
-                  setTimeout(() => {
-            errorcb(response.data)
-                 }, 16)
+            setTimeout(() => {
+                errorcb(response.data)
+            }, 16)
         })
-    }, loginOut(loginUser, cb, errorcb) {
+    },
+    loginOut(loginUser, cb, errorcb) {
 
         console.log("登录用户", loginUser)
         axios.post(
-            rpmApiRoot+"/login/out", {loginUser},{ headers: { 'sid': sessionStorage.getItem('sid') } }).then((response) => {
+            rpmApiRoot + "/login/out", { loginUser }, { headers: { 'sid': sessionStorage.getItem('sid') } }).then((response) => {
             //响应成功
             console.log("退出响应成功", response.data)
             if (response.data.RstCode == 200) {

@@ -9,6 +9,13 @@ import jsonp from 'jsonp'
 
 axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded';
 
+function handle403(resp) {
+    console.log(resp)
+    sessionStorage.setItem("sid", "")
+    router.push({ name: 'login' })
+}
+
+
 export default {
     get(url, headers, cb, errorcb) {
         headers.sid = sessionStorage.getItem('sid')
@@ -23,8 +30,7 @@ export default {
             } else if ("403" == response.data.RstCode) {
                 console.log("get 403")
 
-                sessionStorage.setItem("sid", "")
-                router.push({ name: 'login' })
+
             } else {
                 console.log("get 错误 ", response.data.RstCode)
 
@@ -32,8 +38,7 @@ export default {
             }
         }).catch((resp) => {
             //setTimeout(() => {
-            sessionStorage.setItem("sid", "")
-            router.push({ name: 'login' })
+            handle403(resp)
                 // }, 16)
         })
     },
@@ -76,9 +81,7 @@ export default {
                 errorcb(response.data)
             }
         }).catch((resp) => {
-            sessionStorage.setItem("sid", "")
-            router.push({ name: 'login' })
-            errorcb(resp.data)
+            handle403(resp)
         })
 
 
@@ -103,8 +106,7 @@ export default {
                 errorcb(response.data)
             }
         }).catch((resp) => {
-            console.log("delete - catch - errorcb")
-            errorcb(resp.data)
+            handle403(resp)
         })
     },
     save(url, { params }, cb, errorcb) {
@@ -125,10 +127,7 @@ export default {
                 errorcb(response.data)
             }
         }).catch((resp) => {
-            console.log("catch cb")
-                //setTimeout(() => {
-            errorcb(resp.data)
-                // }, 16)
+            handle403(resp)
         })
     },
     update(url, { params }, cb, errorcb) {
@@ -150,10 +149,7 @@ export default {
                 errorcb(response.data)
             }
         }).catch((resp) => {
-            console.log("catch cb")
-                //setTimeout(() => {
-            errorcb(resp.data)
-                // }, 16)
+            handle403(resp)
         })
     },
     post(url, { params }, cb, errorcb) {
@@ -174,10 +170,7 @@ export default {
                 errorcb(response.data)
             }
         }).catch((resp) => {
-            console.log("catch cb")
-                //setTimeout(() => {
-            errorcb(resp.data)
-                // }, 16)
+            handle403(resp)
         })
     },
     put(url, { params }, cb, errorcb) {
@@ -198,10 +191,7 @@ export default {
                 errorcb(response.data)
             }
         }).catch((resp) => {
-            console.log("catch cb")
-                //setTimeout(() => {
-            errorcb(resp.data)
-                // }, 16)
+            handle403(resp)
         })
     }
 
